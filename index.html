@@ -1,1370 +1,219 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>VOLTARK - Soluciones Eléctricas Profesionales</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta
-    name="description"
-    content="VOLTARK - Servicio técnico de electricidad. Instalaciones eléctricas domiciliarias, comercios, empresas y wallbox para cargadores de autos eléctricos."
-  />
-
-  <!-- Fuente Google -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;700&display=swap"
-    rel="stylesheet"
-  />
-
-  <style>
-    :root {
-      --bg: #050814;
-      --bg-alt: #0b0f1f;
-      --accent: #18d3ff;
-      --accent-strong: #00f7ff;
-      --accent-soft: rgba(0, 247, 255, 0.15);
-      --text-main: #f5f7ff;
-      --text-muted: #9ca3c7;
-      --danger: #ff3366;
-      --card-radius: 18px;
-      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.65);
-      --border-glow: 1px solid rgba(24, 211, 255, 0.35);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html,
-    body {
-      height: 100%;
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: "Rajdhani", system-ui, -apple-system, BlinkMacSystemFont,
-        "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #0b1535, #020309 55%);
-      color: var(--text-main);
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* ---------- CAPA DE TORMENTA GLOBAL (NUEVO) ---------- */
-
-    .storm-layer {
-      position: fixed;
-      inset: -10vh 0 0 0;
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.45;
-      mix-blend-mode: screen;
-    }
-
-    .storm-bolt {
-      position: absolute;
-      width: 2px;
-      height: 260px;
-      background: linear-gradient(
-        to bottom,
-        transparent 0%,
-        rgba(248, 250, 252, 0.95) 30%,
-        rgba(56, 189, 248, 0.95) 55%,
-        transparent 100%
-      );
-      filter: drop-shadow(0 0 13px rgba(56, 189, 248, 0.95));
-      transform-origin: top center;
-      opacity: 0;
-      animation: stormTravel 9s infinite ease-in-out;
-    }
-
-    .storm-bolt::before,
-    .storm-bolt::after {
-      content: "";
-      position: absolute;
-      width: 2px;
-      height: 90px;
-      background: inherit;
-      top: 60px;
-      left: -12px;
-      transform-origin: top;
-    }
-
-    .storm-bolt::before {
-      transform: rotate(-18deg);
-    }
-
-    .storm-bolt::after {
-      left: 12px;
-      transform: rotate(20deg);
-    }
-
-    /* distintas trayectorias y tiempos */
-    .storm-bolt.b1 {
-      top: 5vh;
-      left: -8vw;
-      animation-duration: 11s;
-      animation-delay: 0s;
-      transform: rotate(-8deg);
-    }
-
-    .storm-bolt.b2 {
-      top: 35vh;
-      left: -20vw;
-      animation-duration: 13s;
-      animation-delay: 2.5s;
-      transform: rotate(6deg) scale(1.1);
-    }
-
-    .storm-bolt.b3 {
-      top: 65vh;
-      left: -15vw;
-      animation-duration: 10s;
-      animation-delay: 5s;
-      transform: rotate(-4deg) scale(0.95);
-    }
-
-    .storm-bolt.b4 {
-      top: 15vh;
-      left: -25vw;
-      animation-duration: 15s;
-      animation-delay: 7.5s;
-      transform: rotate(9deg) scale(1.05);
-    }
-
-    @keyframes stormTravel {
-      0% {
-        opacity: 0;
-        transform: translateX(0) scaleY(0.4);
-      }
-      6% {
-        opacity: 0.85;
-        transform: translateX(18vw) scaleY(1);
-      }
-      9% {
-        opacity: 0.3;
-      }
-      12% {
-        opacity: 0.9;
-      }
-      15% {
-        opacity: 0;
-        transform: translateX(35vw) scaleY(0.7);
-      }
-      55% {
-        opacity: 0;
-        transform: translateX(70vw) scaleY(0.6);
-      }
-      60% {
-        opacity: 0.45;
-      }
-      65% {
-        opacity: 0;
-        transform: translateX(115vw) scaleY(0.4);
-      }
-      100% {
-        opacity: 0;
-        transform: translateX(125vw) scaleY(0.4);
-      }
-    }
-
-    /* destellos suaves en el "cielo" */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(circle at 20% -10%, rgba(148, 163, 184, 0.35), transparent 55%),
-        radial-gradient(circle at 80% -10%, rgba(56, 189, 248, 0.3), transparent 60%);
-      opacity: 0;
-      mix-blend-mode: screen;
-      pointer-events: none;
-      z-index: 0;
-      animation: skyFlash 12s infinite ease-in-out;
-    }
-
-    @keyframes skyFlash {
-      0%,
-      25%,
-      100% {
-        opacity: 0;
-      }
-      28% {
-        opacity: 0.21;
-      }
-      30% {
-        opacity: 0.05;
-      }
-      36% {
-        opacity: 0.19;
-      }
-      40% {
-        opacity: 0;
-      }
-      60% {
-        opacity: 0;
-      }
-      63% {
-        opacity: 0.16;
-      }
-      66% {
-        opacity: 0;
-      }
-    }
-
-    /* ---------- Navegación ---------- */
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      backdrop-filter: blur(12px);
-      background: linear-gradient(
-        to bottom,
-        rgba(2, 6, 23, 0.95),
-        rgba(2, 6, 23, 0.75),
-        transparent
-      );
-      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
-    }
-
-    .nav {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0.75rem 1.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      position: relative;
-      z-index: 11;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      font-size: 1rem;
-    }
-
-    .logo-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      border: 1px solid rgba(59, 130, 246, 0.5);
-      background: radial-gradient(circle at 30% 0%, #e5e7eb, #0ea5e9 40%, #020617 70%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.65);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .logo-icon span {
-      font-size: 0.8rem;
-      font-weight: 800;
-      text-shadow: 0 0 8px rgba(15, 23, 42, 0.85);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      font-size: 0.9rem;
-    }
-
-    .nav-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-weight: 500;
-      position: relative;
-      padding-bottom: 0.1rem;
-    }
-
-    .nav-links a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 0%;
-      height: 2px;
-      background: linear-gradient(to right, var(--accent), var(--accent-strong));
-      transition: width 0.25s ease-out;
-    }
-
-    .nav-links a:hover {
-      color: var(--text-main);
-    }
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-
-    .nav-cta {
-      padding: 0.55rem 1.1rem;
-      border-radius: 999px;
-      border: 1px solid rgba(56, 189, 248, 0.5);
-      background: radial-gradient(circle at top, #0f172a, #020617);
-      color: var(--accent);
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      cursor: pointer;
-      transition: transform 0.15s ease-out, box-shadow 0.15s ease-out,
-        border-color 0.15s ease-out, background 0.2s;
-      box-shadow: 0 0 15px rgba(59, 130, 246, 0.25);
-      position: relative;
-      z-index: 11;
-    }
-
-    .nav-cta:hover {
-      transform: translateY(-1px);
-      border-color: var(--accent-strong);
-      box-shadow: 0 0 24px rgba(56, 189, 248, 0.6);
-      background: radial-gradient(circle at top, #020617, #0b1120);
-    }
-
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-      }
-      .nav {
-        justify-content: space-between;
-      }
-    }
-
-    /* ---------- Hero & Fondo con Rayos ---------- */
-
-    main {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero {
-      position: relative;
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 5.5rem 1.25rem 4.5rem;
-      display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-      gap: 3rem;
-      align-items: center;
-    }
-
-    @media (max-width: 900px) {
-      .hero {
-        grid-template-columns: minmax(0, 1fr);
-        padding-top: 4.5rem;
-      }
-    }
-
-    .hero-left h1 {
-      font-size: clamp(2.6rem, 5vw, 3.4rem);
-      line-height: 1.08;
-      text-transform: uppercase;
-      margin-bottom: 0.85rem;
-    }
-
-    .hero-left h1 span {
-      background: linear-gradient(120deg, #e5e7eb, var(--accent-strong));
-      -webkit-background-clip: text;
-      color: transparent;
-      text-shadow: 0 0 15px rgba(56, 189, 248, 0.6);
-    }
-
-    .hero-tagline {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      max-width: 34rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      padding: 0.2rem 0.7rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.2), transparent);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--accent);
-      margin-bottom: 0.9rem;
-    }
-
-    .hero-badge-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #4ade80;
-      box-shadow: 0 0 10px rgba(74, 222, 128, 0.9);
-    }
-
-    .hero-cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.9rem;
-      margin-top: 1.5rem;
-      align-items: center;
-    }
-
-    .btn-primary,
-    .btn-ghost {
-      border-radius: 999px;
-      padding: 0.8rem 1.6rem;
-      font-size: 0.95rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: transform 0.15s ease-out, box-shadow 0.15s ease-out,
-        background 0.2s, border-color 0.2s;
-      white-space: nowrap;
-    }
-
-    .btn-primary {
-      background: linear-gradient(120deg, #22d3ee, #0ea5e9, #6366f1);
-      color: #020617;
-      font-weight: 700;
-      box-shadow: 0 20px 45px rgba(56, 189, 248, 0.45);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 26px 55px rgba(56, 189, 248, 0.75);
-      filter: brightness(1.07);
-    }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--accent);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-    }
-
-    .btn-ghost:hover {
-      border-color: var(--accent-strong);
-      background: rgba(15, 23, 42, 0.9);
-      transform: translateY(-1px);
-      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.9);
-    }
-
-    .hero-note {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: 0.8rem;
-    }
-
-    /* ---------- Tarjeta derecha con rayos ---------- */
-
-    .hero-right {
-      position: relative;
-    }
-
-    .hero-card {
-      position: relative;
-      border-radius: 26px;
-      padding: 1.4rem 1.6rem 1.6rem;
-      background: radial-gradient(circle at top, #020617, #020617 45%, #020617 100%);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      box-shadow: var(--shadow-soft);
-      overflow: hidden;
-      isolation: isolate;
-    }
-
-    .hero-card::before {
-      content: "";
-      position: absolute;
-      inset: -40%;
-      background:
-        radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.18), transparent 55%),
-        radial-gradient(circle at 120% 0%, rgba(96, 165, 250, 0.24), transparent 50%),
-        radial-gradient(circle at 50% 120%, rgba(14, 165, 233, 0.16), transparent 60%);
-      opacity: 0.75;
-      mix-blend-mode: screen;
-      z-index: -2;
-      animation: glowPulse 9s ease-in-out infinite alternate;
-    }
-
-    .hero-card-inner {
-      position: relative;
-      border-radius: 20px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.6), #020617);
-      padding: 1rem 1.1rem 1.2rem;
-      overflow: hidden;
-    }
-
-    .hero-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 0.9rem;
-    }
-
-    .hero-card-title {
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    .hero-card-title span {
-      color: var(--accent);
-    }
-
-    .hero-card-status {
-      font-size: 0.75rem;
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-
-    .hero-card-status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: var(--accent-strong);
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.9);
-    }
-
-    .hero-card-main {
-      position: relative;
-      margin-top: 0.4rem;
-      padding-top: 0.6rem;
-    }
-
-    .hero-card-main h2 {
-      font-size: 1.25rem;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      margin-bottom: 0.3rem;
-    }
-
-    .hero-card-main p {
-      font-size: 0.86rem;
-      color: var(--text-muted);
-      max-width: 17rem;
-    }
-
-    .hero-card-metrics {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.55rem;
-      margin-top: 1.1rem;
-    }
-
-    .metric {
-      border-radius: 12px;
-      padding: 0.65rem 0.7rem;
-      background: rgba(15, 23, 42, 0.95);
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      font-size: 0.78rem;
-    }
-
-    .metric-label {
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 0.25rem;
-    }
-
-    .metric-value {
-      font-size: 1.05rem;
-    }
-
-    .metric-pill {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--accent);
-      margin-top: 0.1rem;
-    }
-
-    .hero-card-footer {
-      margin-top: 1.1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .hero-card-footer span {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    .hero-card-footer strong {
-      color: var(--accent);
-      font-weight: 700;
-    }
-
-    .hero-card-footer button {
-      padding: 0.5rem 0.9rem;
-      border-radius: 999px;
-      border: 1px solid rgba(56, 189, 248, 0.7);
-      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.2), #020617);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--accent);
-      cursor: pointer;
-      transition: transform 0.15s ease-out, box-shadow 0.15s ease-out,
-        border-color 0.15s ease-out;
-    }
-
-    .hero-card-footer button:hover {
-      transform: translateY(-1px);
-      border-color: var(--accent-strong);
-      box-shadow: 0 12px 30px rgba(56, 189, 248, 0.55);
-    }
-
-    /* ---------- Animación de Rayos (Tarjeta) ---------- */
-
-    .lightning-layer {
-      position: absolute;
-      inset: -30%;
-      pointer-events: none;
-      z-index: -1;
-      opacity: 0.85;
-    }
-
-    .ray {
-      position: absolute;
-      width: 2px;
-      height: 220px;
-      background: linear-gradient(
-        to bottom,
-        transparent 0%,
-        rgba(248, 250, 252, 0.9) 35%,
-        rgba(56, 189, 248, 0.95) 55%,
-        transparent 100%
-      );
-      filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.9));
-      transform-origin: top center;
-      opacity: 0;
-      animation: strike 2.2s infinite ease-in-out;
-    }
-
-    .ray::before,
-    .ray::after {
-      content: "";
-      position: absolute;
-      width: 2px;
-      height: 80px;
-      background: inherit;
-      top: 50px;
-      left: -10px;
-      transform-origin: top;
-    }
-
-    .ray::before {
-      transform: rotate(-18deg);
-    }
-
-    .ray::after {
-      left: 10px;
-      transform: rotate(18deg);
-    }
-
-    .ray:nth-child(1) {
-      left: 14%;
-      top: -10%;
-      animation-delay: 0s;
-    }
-    .ray:nth-child(2) {
-      left: 68%;
-      top: -12%;
-      animation-delay: 0.35s;
-      transform: scale(0.9);
-    }
-    .ray:nth-child(3) {
-      left: 30%;
-      top: 5%;
-      animation-delay: 0.9s;
-      transform: scale(0.8);
-    }
-    .ray:nth-child(4) {
-      left: 82%;
-      top: 8%;
-      animation-delay: 1.4s;
-      transform: scale(1.05);
-    }
-
-    @keyframes strike {
-      0%,
-      100% {
-        opacity: 0;
-        transform: scaleY(0.3) translateY(-10px);
-      }
-      4% {
-        opacity: 1;
-        transform: scaleY(1) translateY(0);
-      }
-      8% {
-        opacity: 0.4;
-      }
-      10% {
-        opacity: 1;
-      }
-      18% {
-        opacity: 0;
-        transform: scaleY(0.5) translateY(10px);
-      }
-    }
-
-    @keyframes glowPulse {
-      0% {
-        opacity: 0.7;
-      }
-      100% {
-        opacity: 1;
-      }
-    }
-
-    /* ---------- Secciones Genéricas ---------- */
-
-    section {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0 1.25rem 4rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .section-title {
-      font-size: 1.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      margin-bottom: 0.5rem;
-    }
-
-    .section-subtitle {
-      color: var(--text-muted);
-      max-width: 34rem;
-      margin-bottom: 2rem;
-      font-size: 0.98rem;
-    }
-
-    /* ---------- Servicios ---------- */
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1.4rem;
-    }
-
-    @media (max-width: 900px) {
-      .services-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    .service-card {
-      border-radius: var(--card-radius);
-      padding: 1.2rem 1.35rem;
-      background: radial-gradient(circle at top left, #020617, #020617);
-      border: var(--border-glow);
-      box-shadow: var(--shadow-soft);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .service-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top left, var(--accent-soft), transparent 60%);
-      opacity: 0.12;
-      pointer-events: none;
-    }
-
-    .service-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      border: 1px solid rgba(56, 189, 248, 0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      margin-bottom: 0.85rem;
-      box-shadow: 0 0 18px rgba(56, 189, 248, 0.35);
-    }
-
-    .service-card h3 {
-      font-size: 1.1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 0.3rem;
-    }
-
-    .service-card p {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      margin-bottom: 0.8rem;
-    }
-
-    .service-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-top: 0.3rem;
-    }
-
-    .service-tag {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      padding: 0.25rem 0.6rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      color: var(--accent);
-      background: rgba(15, 23, 42, 0.9);
-    }
-
-    /* ---------- Por qué elegirnos ---------- */
-
-    .why-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      gap: 1.7rem;
-      align-items: flex-start;
-    }
-
-    @media (max-width: 900px) {
-      .why-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    .why-list {
-      list-style: none;
-      display: grid;
-      gap: 0.9rem;
-    }
-
-    .why-item {
-      display: flex;
-      gap: 0.7rem;
-      font-size: 0.95rem;
-    }
-
-    .why-bullet {
-      margin-top: 0.25rem;
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 14px rgba(56, 189, 248, 0.8);
-      flex-shrink: 0;
-    }
-
-    .why-label {
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-size: 0.8rem;
-      color: var(--accent);
-    }
-
-    .why-text {
-      color: var(--text-muted);
-      font-size: 0.92rem;
-    }
-
-    .why-panel {
-      border-radius: var(--card-radius);
-      padding: 1.1rem 1.4rem;
-      background: radial-gradient(circle at top left, #020617, #020617);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      box-shadow: var(--shadow-soft);
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    .why-panel strong {
-      color: var(--accent);
-    }
-
-    /* ---------- Contacto ---------- */
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-      gap: 1.8rem;
-    }
-
-    @media (max-width: 900px) {
-      .contact-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    form {
-      display: grid;
-      gap: 0.9rem;
-    }
-
-    label {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--text-muted);
-    }
-
-    input,
-    textarea {
-      width: 100%;
-      margin-top: 0.3rem;
-      padding: 0.7rem 0.8rem;
-      border-radius: 10px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: rgba(15, 23, 42, 0.95);
-      color: var(--text-main);
-      font-family: inherit;
-      resize: vertical;
-      min-height: 42px;
-      font-size: 0.9rem;
-    }
-
-    input:focus,
-    textarea:focus {
-      outline: none;
-      border-color: var(--accent-strong);
-      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.7);
-    }
-
-    textarea {
-      min-height: 120px;
-    }
-
-    .contact-info-box {
-      border-radius: var(--card-radius);
-      padding: 1.2rem 1.4rem;
-      background: radial-gradient(circle at top left, #020617, #020617);
-      border: var(--border-glow);
-      box-shadow: var(--shadow-soft);
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    .contact-info-box h3 {
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      margin-bottom: 0.6rem;
-    }
-
-    .contact-line {
-      margin-top: 0.2rem;
-    }
-
-    .contact-label {
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-size: 0.75rem;
-    }
-
-    .contact-value {
-      font-size: 0.92rem;
-    }
-
-    footer {
-      border-top: 1px solid rgba(148, 163, 184, 0.4);
-      padding: 1.4rem 1.25rem 2rem;
-      margin-top: 1.5rem;
-      text-align: center;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      background: radial-gradient(circle at top, #020617, #020617 60%, #020617);
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ---------- Utilidades ---------- */
-
-    .highlight {
-      color: var(--accent);
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VOLTARK | Servicios eléctricos</title>
+
+<style>
+:root{
+  --azul:#0b2a4a;
+  --azul-claro:#123e6b;
+  --naranja:#ff8a1c;
+  --texto:#e9f1ff;
+  --muted:#b9c7dd;
+}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(180deg,#061a2f,#020b14);
+  color:var(--texto);
+}
+header{
+  background:#061a2f;
+  border-bottom:3px solid var(--naranja);
+}
+.nav{
+  max-width:1100px;
+  margin:auto;
+  padding:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.brand img{
+  height:42px;
+}
+nav a{
+  color:var(--texto);
+  margin-left:18px;
+  text-decoration:none;
+}
+nav a:hover{color:var(--naranja)}
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:40px 15px;
+}
+.lead{color:var(--muted);max-width:800px}
+.btn{
+  background:var(--naranja);
+  color:#000;
+  padding:12px 18px;
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:bold;
+  display:inline-block;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
+  margin-top:30px;
+}
+.card{
+  background:rgba(18,62,107,.35);
+  border-radius:14px;
+  padding:22px;
+}
+.card h3{color:var(--naranja)}
+footer{
+  background:#020b14;
+  text-align:center;
+  padding:25px;
+  color:var(--muted);
+}
+form{
+  display:grid;
+  gap:12px;
+  margin-top:20px;
+}
+input,select,textarea{
+  padding:10px;
+  border-radius:6px;
+  border:none;
+}
+</style>
 </head>
+
 <body>
-  <!-- Capa de tormenta global -->
-  <div class="storm-layer">
-    <div class="storm-bolt b1"></div>
-    <div class="storm-bolt b2"></div>
-    <div class="storm-bolt b3"></div>
-    <div class="storm-bolt b4"></div>
-  </div>
 
-  <!-- Navegación -->
-  <header>
-    <nav class="nav">
-      <div class="logo">
-        <div class="logo-icon">
-          <span>V</span>
-        </div>
-        <span>VOLTARK</span>
-      </div>
-      <div class="nav-links">
-        <a href="#servicios">Servicios</a>
-        <a href="#por-que">Por qué elegirnos</a>
-        <a href="#contacto">Contacto</a>
-      </div>
-      <button class="nav-cta" onclick="scrollToSection('contacto')">
-        Emergencias 24/7
-      </button>
+<header>
+  <div class="nav">
+    <div class="brand">
+      <img src="logo-voltark.png" alt="VOLTARK">
+    </div>
+    <nav>
+      <a href="#servicios">Servicios</a>
+      <a href="#mision">Misión & Visión</a>
+      <a href="#cotiza">Cotizá ahora</a>
     </nav>
-  </header>
+  </div>
+</header>
 
-  <!-- Hero -->
-  <main>
-    <section class="hero">
-      <div class="hero-left">
-        <div class="hero-badge">
-          <span class="hero-badge-dot"></span>
-          Electricidad Profesional
-        </div>
-        <h1>
-          Energía segura, <br />
-          potencia <span>VOLTARK</span>
-        </h1>
-        <p class="hero-tagline">
-          Servicio técnico especializado en instalaciones eléctricas
-          domiciliarias, comercios, industrias y <strong>wallbox</strong> para
-          cargadores de autos eléctricos. Diseñamos, instalamos y mantenemos
-          sistemas confiables y listos para el futuro.
-        </p>
+<main class="container">
 
-        <div class="hero-cta-row">
-          <button class="btn-primary" onclick="scrollToSection('contacto')">
-            Solicitar presupuesto
-          </button>
-          <button class="btn-ghost" onclick="scrollToSection('servicios')">
-            Ver servicios
-          </button>
-        </div>
+<section>
+  <h1>Soluciones eléctricas integrales</h1>
+  <p class="lead">
+    Diseñamos y potenciamos el futuro con soluciones eléctricas eficientes y seguras.<br><br>
+    Contamos con experiencia en todas las aplicaciones de la energía eléctrica. Realizamos trabajos acorde a las necesidades de cada cliente.<br><br>
+    Te brindamos una instalación segura y confiable.
+  </p>
+  <a href="#cotiza" class="btn">Cotizá ahora</a>
+</section>
 
-        <p class="hero-note">
-          Atendemos urgencias eléctricas y proyectos planificados. Certificación
-          y cumplimiento de normativa vigente.
-        </p>
-      </div>
+<section id="servicios">
+  <h2>Servicios</h2>
+  <div class="grid">
 
-      <div class="hero-right">
-        <div class="hero-card">
-          <!-- Capa de rayos en la tarjeta -->
-          <div class="lightning-layer">
-            <div class="ray"></div>
-            <div class="ray"></div>
-            <div class="ray"></div>
-            <div class="ray"></div>
-          </div>
+    <div class="card">
+      <h3>Mantenimientos eléctricos industriales</h3>
+      <ul>
+        <li>Inspección y diagnóstico</li>
+        <li>Mantenimiento preventivo y correctivo</li>
+        <li>Revisión de tableros y protecciones</li>
+        <li>Mediciones eléctricas</li>
+      </ul>
+    </div>
 
-          <div class="hero-card-inner">
-            <div class="hero-card-header">
-              <div class="hero-card-title">
-                Panel de energía <span>VOLTARK</span>
-              </div>
-              <div class="hero-card-status">
-                <span class="hero-card-status-dot"></span>
-                Sistema estable
-              </div>
-            </div>
+    <div class="card">
+      <h3>Instalaciones domésticas</h3>
+      <ul>
+        <li>Instalaciones nuevas y reformas</li>
+        <li>Tableros y circuitos</li>
+        <li>Puesta a tierra</li>
+        <li>Asesoramiento técnico</li>
+      </ul>
+    </div>
 
-            <div class="hero-card-main">
-              <h2>Instalación Segura</h2>
-              <p>
-                Equilibramos carga, protegemos tus equipos y garantizamos
-                continuidad eléctrica en cada proyecto.
-              </p>
+    <div class="card">
+      <h3>Cotizaciones de edificaciones</h3>
+      <ul>
+        <li>Análisis de proyecto</li>
+        <li>Cómputo de materiales</li>
+        <li>Presupuesto detallado</li>
+        <li>Alternativas técnicas</li>
+      </ul>
+    </div>
 
-              <div class="hero-card-metrics">
-                <div class="metric">
-                  <div class="metric-label">Wallbox Instalados</div>
-                  <div class="metric-value">+120</div>
-                  <div class="metric-pill">Vehículos eléctricos listos</div>
-                </div>
-                <div class="metric">
-                  <div class="metric-label">Respuesta Urgente</div>
-                  <div class="metric-value">24/7</div>
-                  <div class="metric-pill">Asistencia inmediata</div>
-                </div>
-                <div class="metric">
-                  <div class="metric-label">Clientes empresas</div>
-                  <div class="metric-value">+80</div>
-                  <div class="metric-pill">Comercio & industria</div>
-                </div>
-                <div class="metric">
-                  <div class="metric-label">Tensión segura</div>
-                  <div class="metric-value">100%</div>
-                  <div class="metric-pill">Pruebas y mediciones</div>
-                </div>
-              </div>
+    <div class="card">
+      <h3>Cargadores eléctricos</h3>
+      <ul>
+        <li>Evaluación eléctrica</li>
+        <li>Instalación de wallbox</li>
+        <li>Protecciones dedicadas</li>
+        <li>Puesta en marcha</li>
+      </ul>
+    </div>
 
-              <div class="hero-card-footer">
-                <span>
-                  Próximo turno disponible: <strong>HOY</strong> por la tarde
-                </span>
-                <button onclick="scrollToSection('contacto')">
-                  Coordinar visita
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+  </div>
+</section>
 
-    <!-- Servicios -->
-    <section id="servicios">
-      <h2 class="section-title">Servicios eléctricos</h2>
-      <p class="section-subtitle">
-        En <span class="highlight">VOLTARK</span> trabajamos con instalaciones
-        nuevas, mejoras y mantenimiento preventivo. Siempre con prioridad en la
-        seguridad, el orden y la estética de cada trabajo.
+<section id="mision">
+  <h2>Misión y Visión</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Misión</h3>
+      <p>
+        Diseñamos y potenciamos el futuro. Entregamos soluciones eléctricas integrables,
+        desde la concepción hasta la puesta en marcha, garantizando la máxima eficiencia
+        y operatividad para impulsar el éxito de nuestros clientes.
       </p>
-
-      <div class="services-grid">
-        <article class="service-card">
-          <div class="service-icon">🏠</div>
-          <h3>Domiciliario</h3>
-          <p>
-            Diseño y ejecución de instalaciones eléctricas para viviendas
-            nuevas y existentes. Renovación de tableros, cableado, puesta a
-            tierra y protección diferencial.
-          </p>
-          <div class="service-tags">
-            <span class="service-tag">Tableros modernos</span>
-            <span class="service-tag">Iluminación LED</span>
-            <span class="service-tag">Certificación</span>
-          </div>
-        </article>
-
-        <article class="service-card">
-          <div class="service-icon">🏢</div>
-          <h3>Empresas & Comercios</h3>
-          <p>
-            Soluciones para locales, oficinas e industrias. Canalización,
-            distribución de cargas, tomas de potencia, sistemas trifásicos y
-            mantenimiento programado.
-          </p>
-          <div class="service-tags">
-            <span class="service-tag">Trifásico</span>
-            <span class="service-tag">UPS & backup</span>
-            <span class="service-tag">Baja tensión</span>
-          </div>
-        </article>
-
-        <article class="service-card">
-          <div class="service-icon">⚡</div>
-          <h3>Wallbox & Autos Eléctricos</h3>
-          <p>
-            Instalación de puntos de carga para vehículos eléctricos: cálculo
-            de potencia, protecciones dedicadas, canalización y puesta en
-            marcha segura.
-          </p>
-          <div class="service-tags">
-            <span class="service-tag">Wallbox</span>
-            <span class="service-tag">Carga rápida</span>
-            <span class="service-tag">Balance de carga</span>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- Por qué elegirnos -->
-    <section id="por-que">
-      <h2 class="section-title">Por qué elegir VOLTARK</h2>
-      <p class="section-subtitle">
-        No se trata sólo de "hacer andar la luz". Se trata de seguridad,
-        previsión y una instalación pensada para crecer con tus necesidades.
+    </div>
+    <div class="card">
+      <h3>Visión</h3>
+      <p>
+        Ser referentes en ingeniería eléctrica en el país con excelencia en el servicio
+        y cercanía con los clientes. Impulsar un crecimiento sostenible que genera valor
+        y abre nuevas oportunidades.
       </p>
+    </div>
+  </div>
+</section>
 
-      <div class="why-grid">
-        <ul class="why-list">
-          <li class="why-item">
-            <span class="why-bullet"></span>
-            <div>
-              <div class="why-label">Seguridad ante todo</div>
-              <div class="why-text">
-                Respetamos normas y buenas prácticas en cada etapa del trabajo.
-                Tableros ordenados, protecciones correctas y mediciones
-                realizadas antes de entregar.
-              </div>
-            </div>
-          </li>
-          <li class="why-item">
-            <span class="why-bullet"></span>
-            <div>
-              <div class="why-label">Soluciones a medida</div>
-              <div class="why-text">
-                No todos los hogares o empresas consumen igual. Analizamos tus
-                equipos, cargas y proyectos futuros para dimensionar de forma
-                inteligente.
-              </div>
-            </div>
-          </li>
-          <li class="why-item">
-            <span class="why-bullet"></span>
-            <div>
-              <div class="why-label">Respuesta rápida</div>
-              <div class="why-text">
-                Entendemos que un problema eléctrico no puede esperar.
-                Coordinamos visitas en el menor tiempo posible y ofrecemos
-                opciones de emergencia.
-              </div>
-            </div>
-          </li>
-        </ul>
+<section id="cotiza">
+  <h2>Cotizá ahora</h2>
+  <form onsubmit="sendMail(event)">
+    <input id="nombre" placeholder="Nombre" required>
+    <input id="email" type="email" placeholder="Email" required>
+    <select id="servicio" required>
+      <option value="">Servicio</option>
+      <option>Mantenimiento industrial</option>
+      <option>Instalación doméstica</option>
+      <option>Edificación</option>
+      <option>Cargador eléctrico</option>
+    </select>
+    <textarea id="detalle" placeholder="Detalle del trabajo"></textarea>
+    <button class="btn" type="submit">Enviar</button>
+  </form>
+</section>
 
-        <aside class="why-panel">
-          <p>
-            <strong>VOLTARK</strong> es tu aliado para preparar tu instalación
-            eléctrica para el presente y el futuro:
-          </p>
-          <br />
-          <ul style="list-style: none; padding-left: 0; display: grid; gap: 0.4rem;">
-            <li>• Actualización de instalaciones antiguas.</li>
-            <li>• Preparación para paneles solares y backup.</li>
-            <li>• Puntos de carga para autos eléctricos en garajes.</li>
-            <li>• Proyectos escalables para empresas en crecimiento.</li>
-          </ul>
-          <br />
-          <p>
-            ¿Tenés un proyecto en mente? <strong>Escribinos</strong> y lo
-            pensamos juntos.
-          </p>
-        </aside>
-      </div>
-    </section>
+</main>
 
-    <!-- Contacto -->
-    <section id="contacto">
-      <h2 class="section-title">Contacto & urgencias</h2>
-      <p class="section-subtitle">
-        Completá el formulario o escribinos directamente por WhatsApp o correo.
-        Te responderemos con un presupuesto orientativo o coordinaremos una
-        visita técnica.
-      </p>
+<footer>
+© <span id="year"></span> VOLTARK
+</footer>
 
-      <div class="contact-grid">
-        <div>
-          <form onsubmit="handleFormSubmit(event)">
-            <div>
-              <label for="nombre">Nombre</label>
-              <input id="nombre" name="nombre" type="text" required />
-            </div>
-            <div>
-              <label for="email">Correo</label>
-              <input id="email" name="email" type="email" required />
-            </div>
-            <div>
-              <label for="telefono">Teléfono / WhatsApp</label>
-              <input id="telefono" name="telefono" type="tel" />
-            </div>
-            <div>
-              <label for="tipo">Tipo de instalación</label>
-              <input
-                id="tipo"
-                name="tipo"
-                type="text"
-                placeholder="Domicilio, empresa, wallbox..."
-              />
-            </div>
-            <div>
-              <label for="mensaje">Detalle del trabajo</label>
-              <textarea
-                id="mensaje"
-                name="mensaje"
-                placeholder="Contanos qué necesitás: tipo de instalación, ubicación, horarios disponibles..."
-                required
-              ></textarea>
-            </div>
+<script>
+document.getElementById("year").textContent=new Date().getFullYear();
+function sendMail(e){
+  e.preventDefault();
+  const subject="Solicitud de cotización - "+servicio.value;
+  const body=`Nombre: ${nombre.value}\nEmail: ${email.value}\nServicio: ${servicio.value}\nDetalle: ${detalle.value}`;
+  window.location.href=`mailto:voltark.uy@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+</script>
 
-            <button type="submit" class="btn-primary">
-              Enviar consulta
-            </button>
-          </form>
-        </div>
-
-        <aside class="contact-info-box">
-          <h3>Canales directos</h3>
-
-          <div class="contact-line">
-            <div class="contact-label">WhatsApp</div>
-            <div class="contact-value">
-              +598 0000 0000
-            </div>
-          </div>
-
-          <div class="contact-line">
-            <div class="contact-label">Correo</div>
-            <div class="contact-value">
-              contacto@voltark.com
-            </div>
-          </div>
-
-          <div class="contact-line">
-            <div class="contact-label">Horario</div>
-            <div class="contact-value">
-              Lunes a sábado de 8:00 a 20:00<br />
-              Emergencias fuera de horario según disponibilidad.
-            </div>
-          </div>
-
-          <div class="contact-line">
-            <div class="contact-label">Cobertura</div>
-            <div class="contact-value">
-              Zona urbana y alrededores. Consultá por traslados a otras ciudades
-              o proyectos especiales.
-            </div>
-          </div>
-        </aside>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    © <span id="year"></span> VOLTARK · Instalaciones eléctricas y wallbox ·
-    Todos los derechos reservados.
-  </footer>
-
-  <script>
-    // Scroll suave a secciones
-    function scrollToSection(id) {
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
-
-    // Año dinámico en el footer
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // Manejo básico del formulario (sólo front-end)
-    function handleFormSubmit(event) {
-      event.preventDefault();
-      alert(
-        "Gracias por tu mensaje. VOLTARK se pondrá en contacto contigo a la brevedad."
-      );
-      event.target.reset();
-    }
-  </script>
 </body>
 </html>
