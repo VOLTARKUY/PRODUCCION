@@ -4,15 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>VOLTARK | Servicios eléctricos</title>
-
 <style>
 :root{
   --azul:#0b2a4a;
-  --azul-claro:#123e6b;
+  --azul-2:#123e6b;
   --naranja:#ff8a1c;
   --texto:#e9f1ff;
   --muted:#b9c7dd;
+  --card:rgba(18,62,107,.35);
 }
+*{box-sizing:border-box}
 body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
@@ -22,70 +23,185 @@ body{
 header{
   background:#061a2f;
   border-bottom:3px solid var(--naranja);
+  position:sticky;
+  top:0;
+  z-index:10;
 }
 .nav{
-  max-width:1100px;
+  max-width:1200px;
   margin:auto;
-  padding:15px;
+  padding:15px 18px;
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:20px;
 }
-.brand img{
-  height:42px;
-}
+.brand img{height:46px}
 nav a{
   color:var(--texto);
   margin-left:18px;
   text-decoration:none;
+  font-weight:600;
 }
 nav a:hover{color:var(--naranja)}
 .container{
-  max-width:1100px;
+  max-width:1200px;
   margin:auto;
-  padding:40px 15px;
+  padding:44px 18px;
 }
-.lead{color:var(--muted);max-width:800px}
+.hero{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:28px;
+  align-items:center;
+}
+.hero-box{
+  background:linear-gradient(180deg, rgba(18,62,107,.38), rgba(8,28,48,.65));
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;
+  padding:28px;
+}
+h1,h2,h3{margin-top:0}
+.lead{
+  color:var(--muted);
+  max-width:800px;
+  line-height:1.65;
+  font-size:1.02rem;
+}
 .btn{
   background:var(--naranja);
-  color:#000;
+  color:#08111c;
   padding:12px 18px;
   border-radius:8px;
   text-decoration:none;
   font-weight:bold;
   display:inline-block;
+  border:none;
+  cursor:pointer;
 }
-.grid{
+.section-title{
+  margin:52px 0 14px;
+  font-size:2rem;
+}
+.services-stack, .mv-accordion{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:25px;
-  margin-top:30px;
+  gap:18px;
+  margin-top:22px;
+}
+.service-item, .mv-item{
+  background:var(--card);
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.08);
+  overflow:hidden;
+}
+.service-item summary, .mv-item summary{
+  list-style:none;
+  cursor:pointer;
+  padding:24px 28px;
+  color:var(--naranja);
+  font-size:1.55rem;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.service-item summary::-webkit-details-marker,
+.mv-item summary::-webkit-details-marker{display:none}
+.service-item summary::after,
+.mv-item summary::after{
+  content:"+";
+  color:var(--texto);
+  font-size:2rem;
+  line-height:1;
+}
+.service-item[open] summary::after,
+.mv-item[open] summary::after{
+  content:"−";
+}
+.service-panel{
+  display:grid;
+  grid-template-columns:1.25fr .75fr;
+  gap:24px;
+  padding:0 28px 28px 28px;
+  align-items:start;
+}
+.service-info p{
+  color:var(--muted);
+  line-height:1.6;
+  margin:0 0 16px 0;
+}
+.service-info ul{
+  margin:0;
+  padding-left:22px;
+  line-height:1.65;
+}
+.service-media{
+  width:100%;
+  min-height:260px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.03);
+}
+.service-media img{
+  width:100%;
+  height:100%;
+  min-height:260px;
+  object-fit:cover;
+  display:block;
+}
+.mv-content{
+  padding:0 24px 22px 24px;
+}
+.mv-content p{
+  color:var(--muted);
+  line-height:1.65;
+  margin:0;
 }
 .card{
-  background:rgba(18,62,107,.35);
-  border-radius:14px;
-  padding:22px;
+  background:var(--card);
+  border-radius:18px;
+  padding:24px;
+  border:1px solid rgba(255,255,255,.08);
 }
-.card h3{color:var(--naranja)}
+form{
+  display:grid;
+  gap:12px;
+  margin-top:18px;
+}
+input,select,textarea{
+  padding:12px;
+  border-radius:8px;
+  border:none;
+  font:inherit;
+}
 footer{
   background:#020b14;
   text-align:center;
   padding:25px;
   color:var(--muted);
+  margin-top:40px;
 }
-form{
-  display:grid;
-  gap:12px;
-  margin-top:20px;
+.note{
+  color:var(--muted);
+  font-size:.95rem;
+  margin-top:10px;
 }
-input,select,textarea{
-  padding:10px;
-  border-radius:6px;
-  border:none;
+@media (max-width:900px){
+  .hero, .service-panel{grid-template-columns:1fr}
+  nav a{margin-left:12px}
+  .service-media{min-height:220px}
+  .service-media img{min-height:220px}
+}
+@media (max-width:640px){
+  .nav{flex-direction:column; align-items:flex-start}
+  nav a{display:inline-block; margin:0 12px 10px 0}
+  .service-item summary, .mv-item summary{padding:18px 20px; font-size:1.2rem}
+  .service-panel{padding:0 20px 20px 20px}
 }
 </style>
 </head>
-
 <body>
 
 <header>
@@ -94,124 +210,262 @@ input,select,textarea{
       <img src="logo-voltark.png" alt="VOLTARK">
     </div>
     <nav>
+      <a href="#mision-vision">Misión y Visión</a>
       <a href="#servicios">Servicios</a>
-      <a href="#mision">Misión & Visión</a>
-      <a href="#cotiza">Cotizá ahora</a>
+      <a href="#consultanos">Consultanos</a>
     </nav>
   </div>
 </header>
 
 <main class="container">
-
-<section>
-  <h1>Soluciones eléctricas integrales</h1>
-  <p class="lead">
-    Diseñamos y potenciamos el futuro con soluciones eléctricas eficientes y seguras.<br><br>
-    Contamos con experiencia en todas las aplicaciones de la energía eléctrica. Realizamos trabajos acorde a las necesidades de cada cliente.<br><br>
-    Te brindamos una instalación segura y confiable.
-  </p>
-  <a href="#cotiza" class="btn">Cotizá ahora</a>
-</section>
-
-<section id="servicios">
-  <h2>Servicios</h2>
-  <div class="grid">
-
-    <div class="card">
-      <h3>Mantenimientos eléctricos industriales</h3>
-      <ul>
-        <li>Inspección y diagnóstico</li>
-        <li>Mantenimiento preventivo y correctivo</li>
-        <li>Revisión de tableros y protecciones</li>
-        <li>Mediciones eléctricas</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Instalaciones domésticas</h3>
-      <ul>
-        <li>Instalaciones nuevas y reformas</li>
-        <li>Tableros y circuitos</li>
-        <li>Puesta a tierra</li>
-        <li>Asesoramiento técnico</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Cotizaciones de edificaciones</h3>
-      <ul>
-        <li>Análisis de proyecto</li>
-        <li>Cómputo de materiales</li>
-        <li>Presupuesto detallado</li>
-        <li>Alternativas técnicas</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Cargadores eléctricos</h3>
-      <ul>
-        <li>Evaluación eléctrica</li>
-        <li>Instalación de wallbox</li>
-        <li>Protecciones dedicadas</li>
-        <li>Puesta en marcha</li>
-      </ul>
-    </div>
-
-  </div>
-</section>
-
-<section id="mision">
-  <h2>Misión y Visión</h2>
-  <div class="grid">
-    <div class="card">
-      <h3>Misión</h3>
-      <p>
-        Diseñamos y potenciamos el futuro. Entregamos soluciones eléctricas integrables,
-        desde la concepción hasta la puesta en marcha, garantizando la máxima eficiencia
-        y operatividad para impulsar el éxito de nuestros clientes.
+  <section class="hero">
+    <div>
+      <h1>Sobre nosotros</h1>
+      <p class="lead">
+        Voltark Ingeniería Eléctrica es una empresa especializada en soluciones de ingeniería eléctrica, orientada al desarrollo, fabricación e implementación de sistemas eléctricos para obras y proyectos de diversa escala.<br><br>
+Diseñamos y potenciamos el futuro con soluciones eléctricas eficientes y seguras.<br><br>
+        Contamos con experiencia en todas las aplicaciones de la energía eléctrica. Realizamos trabajos acorde a las necesidades de cada cliente.<br><br>
+        Nos enfocamos en brindar respuestas técnicas concretas en obra, combinando ingeniería, ejecución y cumplimiento normativo.
       </p>
+      <a href="#consultanos" class="btn">Consultanos</a>
     </div>
-    <div class="card">
-      <h3>Visión</h3>
-      <p>
-        Ser referentes en ingeniería eléctrica en el país con excelencia en el servicio
-        y cercanía con los clientes. Impulsar un crecimiento sostenible que genera valor
-        y abre nuevas oportunidades.
-      </p>
+
+  <section id="mision-vision">
+    <h2 class="section-title">Misión y Visión</h2>
+    <div class="mv-accordion">
+      <details class="mv-item">
+        <summary>Misión</summary>
+        <div class="mv-content">
+          <p>
+            Diseñamos y potenciamos el futuro. Entregamos soluciones eléctricas integrables,
+            desde la concepción hasta la puesta en marcha, garantizando la máxima eficiencia
+            y operatividad para impulsar el éxito de nuestros clientes.
+          </p>
+        </div>
+      </details>
+
+      <details class="mv-item">
+        <summary>Visión</summary>
+        <div class="mv-content">
+          <p>
+            Ser referentes en ingeniería eléctrica en el país con excelencia en el servicio
+            y cercanía con los clientes. Impulsar un crecimiento sostenible que genera valor
+            y abre nuevas oportunidades.
+          </p>
+        </div>
+      </details>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="cotiza">
-  <h2>Cotizá ahora</h2>
-  <form onsubmit="sendMail(event)">
-    <input id="nombre" placeholder="Nombre" required>
-    <input id="email" type="email" placeholder="Email" required>
-    <select id="servicio" required>
-      <option value="">Servicio</option>
-      <option>Mantenimiento industrial</option>
-      <option>Instalación doméstica</option>
-      <option>Edificación</option>
-      <option>Cargador eléctrico</option>
-    </select>
-    <textarea id="detalle" placeholder="Detalle del trabajo"></textarea>
-    <button class="btn" type="submit">Enviar</button>
-  </form>
-</section>
+  <section id="servicios">
+    <h2 class="section-title">Servicios</h2>
+    <div class="services-stack">
+      
+    <details class="service-item" open>
+      <summary>Proyectos eléctricos BT/MT</summary>
+      <div class="service-panel">
+        <div class="service-info">
+          <p>Desarrollo integral de proyectos eléctricos en baja y media tensión, desde el
+relevamiento inicial hasta la ingeniería de detalle. Incluye dimensionamiento,
+protecciones, selectividad y cumplimiento normativo.</p>
+          <ul>
+            <li>Diseño y planificación de proyectos eléctricos</li>
+<li>Analisis y Correcciones de Energia</li>
+<li>Construccion de Tableros, esquemas y documentación técnica</li>
+<li>Soluciones adaptadas a industria, comercio y edificios</li>
+          </ul>
+        </div>
+        <div class="service-media">
+          <img src="Imagen-1.png" alt="Imagen de referencia para Proyectos eléctricos BT/MT">
+        </div>
+      </div>
+    </details>
+    
+    <details class="service-item" >
+      <summary>Iluminación y señalización</summary>
+      <div class="service-panel">
+        <div class="service-info">
+          <p>Soluciones de iluminación funcional, eficiente y segura para distintos entornos.</p>
+          <ul>
+            <li>Diseño de iluminación interior y exterior</li>
+<li>Cálculo y distribución de luminarias</li>
+<li>Señalización técnica y de seguridad</li>
+<li>Optimización visual y energética</li>
+          </ul>
+        </div>
+        <div class="service-media">
+          <img src="data:image/svg+xml;charset=utf-8,%0A%20%20%20%20%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%201200%20800%27%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20x2%3D%271%27%20y1%3D%270%27%20y2%3D%271%27%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%270%25%27%20stop-color%3D%27%23184f7d%27/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%27100%25%27%20stop-color%3D%27%230b2942%27/%3E%0A%20%20%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%271200%27%20height%3D%27800%27%20fill%3D%27url%28%23g%29%27/%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%2745%27%20y%3D%2745%27%20width%3D%271110%27%20height%3D%27710%27%20rx%3D%2726%27%20fill%3D%27none%27%20stroke%3D%27rgba%28255%2C255%2C255%2C.18%29%27/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2780%27%20y%3D%27360%27%20font-size%3D%2756%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20font-weight%3D%27700%27%20fill%3D%27white%27%3EIluminaci%C3%B3n%20y%20se%C3%B1alizaci%C3%B3n%3C/text%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2780%27%20y%3D%27430%27%20font-size%3D%2728%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20fill%3D%27%23d7e6ff%27%3EImagen%20de%20referencia%3C/text%3E%0A%20%20%20%20%3C/svg%3E%0A%20%20%20%20" alt="Imagen de referencia para Iluminación y señalización">
+        </div>
+      </div>
+    </details>
+    
+    <details class="service-item" >
+      <summary>Energías Renovables</summary>
+      <div class="service-panel">
+        <div class="service-info">
+          <p>Integración de soluciones energéticas sostenibles para reducir consumo y mejorar eficiencia.</p>
+          <ul>
+            <li>Evaluación técnica de alternativas renovables</li>
+<li>Dimensionamiento preliminar de sistemas</li>
+<li>Análisis de viabilidad</li>
+<li>Soluciones orientadas a eficiencia energética</li>
+          </ul>
+        </div>
+        <div class="service-media">
+          <img src="data:image/svg+xml;charset=utf-8,%0A%20%20%20%20%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%201200%20800%27%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20x2%3D%271%27%20y1%3D%270%27%20y2%3D%271%27%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%270%25%27%20stop-color%3D%27%231d6a63%27/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%27100%25%27%20stop-color%3D%27%230b2f2b%27/%3E%0A%20%20%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%271200%27%20height%3D%27800%27%20fill%3D%27url%28%23g%29%27/%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%2745%27%20y%3D%2745%27%20width%3D%271110%27%20height%3D%27710%27%20rx%3D%2726%27%20fill%3D%27none%27%20stroke%3D%27rgba%28255%2C255%2C255%2C.18%29%27/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2780%27%20y%3D%27360%27%20font-size%3D%2756%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20font-weight%3D%27700%27%20fill%3D%27white%27%3EEnerg%C3%ADas%20Renovables%3C/text%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2780%27%20y%3D%27430%27%20font-size%3D%2728%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20fill%3D%27%23d7e6ff%27%3EImagen%20de%20referencia%3C/text%3E%0A%20%20%20%20%3C/svg%3E%0A%20%20%20%20" alt="Imagen de referencia para Energías Renovables">
+        </div>
+      </div>
+    </details>
+    
+    <details class="service-item" >
+      <summary>Medición y diseño de PAT</summary>
+      <div class="service-panel">
+        <div class="service-info">
+          <p>Estudio, mejora y diseño de sistemas de puesta a tierra confiables y seguros.</p>
+          <ul>
+            <li>Medición de resistencia de puesta a tierra</li>
+<li>Diseño y mejora de sistemas PAT</li>
+<li>Selección de materiales y configuración</li>
+<li>Verificación de desempeño del sistema</li>
+          </ul>
+        </div>
+        <div class="service-media">
+          <img src="data:image/svg+xml;charset=utf-8,%0A%20%20%20%20%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%201200%20800%27%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20x2%3D%271%27%20y1%3D%270%27%20y2%3D%271%27%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%270%25%27%20stop-color%3D%27%230f365e%27/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%27100%25%27%20stop-color%3D%27%23071a2e%27/%3E%0A%20%20%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%271200%27%20height%3D%27800%27%20fill%3D%27url%28%23g%29%27/%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%2745%27%20y%3D%2745%27%20width%3D%271110%27%20height%3D%27710%27%20rx%3D%2726%27%20fill%3D%27none%27%20stroke%3D%27rgba%28255%2C255%2C255%2C.18%29%27/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2780%27%20y%3D%27360%27%20font-size%3D%2756%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20font-weight%3D%27700%27%20fill%3D%27white%27%3EMedici%C3%B3n%20y%20dise%C3%B1o%20de%20PAT%3C/text%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2780%27%20y%3D%27430%27%20font-size%3D%2728%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20fill%3D%27%23d7e6ff%27%3EImagen%20de%20referencia%3C/text%3E%0A%20%20%20%20%3C/svg%3E%0A%20%20%20%20" alt="Imagen de referencia para Medición y diseño de PAT">
+        </div>
+      </div>
+    </details>
+    
+    <details class="service-item" >
+      <summary>Mantenimiento de Instalaciones eléctricas existentes</summary>
+      <div class="service-panel">
+        <div class="service-info">
+          <p>Diagnóstico y mantenimiento para preservar la seguridad y continuidad operativa.</p>
+          <ul>
+            <li>Inspección técnica de instalaciones existentes</li>
+<li>Mantenimiento preventivo y correctivo</li>
+<li>Revisión de tableros, protecciones y circuitos</li>
+<li>Detección de puntos críticos y mejoras</li>
+          </ul>
+        </div>
+        <div class="service-media">
+          <img src="data:image/svg+xml;charset=utf-8,%0A%20%20%20%20%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%201200%20800%27%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20x2%3D%271%27%20y1%3D%270%27%20y2%3D%271%27%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%270%25%27%20stop-color%3D%27%23153d69%27/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%27100%25%27%20stop-color%3D%27%23081f36%27/%3E%0A%20%20%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%271200%27%20height%3D%27800%27%20fill%3D%27url%28%23g%29%27/%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%2745%27%20y%3D%2745%27%20width%3D%271110%27%20height%3D%27710%27%20rx%3D%2726%27%20fill%3D%27none%27%20stroke%3D%27rgba%28255%2C255%2C255%2C.18%29%27/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2780%27%20y%3D%27360%27%20font-size%3D%2756%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20font-weight%3D%27700%27%20fill%3D%27white%27%3EMantenimiento%20de%20Instalaciones%3C/text%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2780%27%20y%3D%27430%27%20font-size%3D%2728%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20fill%3D%27%23d7e6ff%27%3EImagen%20de%20referencia%3C/text%3E%0A%20%20%20%20%3C/svg%3E%0A%20%20%20%20" alt="Imagen de referencia para Mantenimiento de Instalaciones eléctricas existentes">
+        </div>
+      </div>
+    </details>
+    
+    <details class="service-item" >
+      <summary>Proyecto de Infraestructura física y lógica de redes</summary>
+      <div class="service-panel">
+        <div class="service-info">
+          <p>Planificación de infraestructura para redes de datos con enfoque ordenado y escalable.</p>
+          <ul>
+            <li>Canalizaciones, rack y distribución física</li>
+<li>Puestos de red y organización de cableado</li>
+<li>Esquema lógico de red</li>
+<li>Preparación para entornos empresariales</li>
+          </ul>
+        </div>
+        <div class="service-media">
+          <img src="data:image/svg+xml;charset=utf-8,%0A%20%20%20%20%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%201200%20800%27%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20x2%3D%271%27%20y1%3D%270%27%20y2%3D%271%27%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%270%25%27%20stop-color%3D%27%2314456f%27/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%27100%25%27%20stop-color%3D%27%2308253e%27/%3E%0A%20%20%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%271200%27%20height%3D%27800%27%20fill%3D%27url%28%23g%29%27/%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%2745%27%20y%3D%2745%27%20width%3D%271110%27%20height%3D%27710%27%20rx%3D%2726%27%20fill%3D%27none%27%20stroke%3D%27rgba%28255%2C255%2C255%2C.18%29%27/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2780%27%20y%3D%27360%27%20font-size%3D%2756%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20font-weight%3D%27700%27%20fill%3D%27white%27%3EInfraestructura%20de%20redes%3C/text%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2780%27%20y%3D%27430%27%20font-size%3D%2728%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20fill%3D%27%23d7e6ff%27%3EImagen%20de%20referencia%3C/text%3E%0A%20%20%20%20%3C/svg%3E%0A%20%20%20%20" alt="Imagen de referencia para Proyecto de Infraestructura física y lógica de redes">
+        </div>
+      </div>
+    </details>
+    
+    <details class="service-item" >
+      <summary>Modificación en infraestructura existente</summary>
+      <div class="service-panel">
+        <div class="service-info">
+          <p>Adecuaciones y ampliaciones sobre instalaciones ya operativas.</p>
+          <ul>
+            <li>Relevamiento de infraestructura instalada</li>
+<li>Ampliaciones y redistribución</li>
+<li>Reorganización de canalizaciones y puestos</li>
+<li>Mejora funcional sin reemplazo total</li>
+          </ul>
+        </div>
+        <div class="service-media">
+          <img src="data:image/svg+xml;charset=utf-8,%0A%20%20%20%20%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%201200%20800%27%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20x2%3D%271%27%20y1%3D%270%27%20y2%3D%271%27%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%270%25%27%20stop-color%3D%27%231a4c78%27/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%27100%25%27%20stop-color%3D%27%230a2943%27/%3E%0A%20%20%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%271200%27%20height%3D%27800%27%20fill%3D%27url%28%23g%29%27/%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%2745%27%20y%3D%2745%27%20width%3D%271110%27%20height%3D%27710%27%20rx%3D%2726%27%20fill%3D%27none%27%20stroke%3D%27rgba%28255%2C255%2C255%2C.18%29%27/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2780%27%20y%3D%27360%27%20font-size%3D%2756%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20font-weight%3D%27700%27%20fill%3D%27white%27%3EInfraestructura%20existente%3C/text%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2780%27%20y%3D%27430%27%20font-size%3D%2728%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20fill%3D%27%23d7e6ff%27%3EImagen%20de%20referencia%3C/text%3E%0A%20%20%20%20%3C/svg%3E%0A%20%20%20%20" alt="Imagen de referencia para Modificación en infraestructura existente">
+        </div>
+      </div>
+    </details>
+    
+    <details class="service-item" >
+      <summary>Telefonía</summary>
+      <div class="service-panel">
+        <div class="service-info">
+          <p>Implementación y adecuación de soluciones de telefonía para entornos corporativos y comerciales.</p>
+          <ul>
+            <li>Infraestructura para telefonía</li>
+<li>Ordenamiento de cableado asociado</li>
+<li>Distribución de puntos</li>
+<li>Adecuación a necesidades operativas</li>
+          </ul>
+        </div>
+        <div class="service-media">
+          <img src="data:image/svg+xml;charset=utf-8,%0A%20%20%20%20%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%201200%20800%27%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20x2%3D%271%27%20y1%3D%270%27%20y2%3D%271%27%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%270%25%27%20stop-color%3D%27%231b4a73%27/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%27100%25%27%20stop-color%3D%27%230b2138%27/%3E%0A%20%20%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%271200%27%20height%3D%27800%27%20fill%3D%27url%28%23g%29%27/%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%2745%27%20y%3D%2745%27%20width%3D%271110%27%20height%3D%27710%27%20rx%3D%2726%27%20fill%3D%27none%27%20stroke%3D%27rgba%28255%2C255%2C255%2C.18%29%27/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2780%27%20y%3D%27360%27%20font-size%3D%2756%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20font-weight%3D%27700%27%20fill%3D%27white%27%3ETelefon%C3%ADa%3C/text%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2780%27%20y%3D%27430%27%20font-size%3D%2728%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20fill%3D%27%23d7e6ff%27%3EImagen%20de%20referencia%3C/text%3E%0A%20%20%20%20%3C/svg%3E%0A%20%20%20%20" alt="Imagen de referencia para Telefonía">
+        </div>
+      </div>
+    </details>
+    
+    <details class="service-item" >
+      <summary>Sistemas CCTV</summary>
+      <div class="service-panel">
+        <div class="service-info">
+          <p>Diseño e instalación de sistemas de videovigilancia para control y seguridad.</p>
+          <ul>
+            <li>Ubicación estratégica de cámaras</li>
+<li>Canalización e infraestructura asociada</li>
+<li>Integración con red y energía</li>
+<li>Soluciones para vigilancia y monitoreo</li>
+          </ul>
+        </div>
+        <div class="service-media">
+          <img src="data:image/svg+xml;charset=utf-8,%0A%20%20%20%20%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%201200%20800%27%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20x2%3D%271%27%20y1%3D%270%27%20y2%3D%271%27%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%270%25%27%20stop-color%3D%27%2317385d%27/%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%27100%25%27%20stop-color%3D%27%23091a2e%27/%3E%0A%20%20%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3C/defs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%271200%27%20height%3D%27800%27%20fill%3D%27url%28%23g%29%27/%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%2745%27%20y%3D%2745%27%20width%3D%271110%27%20height%3D%27710%27%20rx%3D%2726%27%20fill%3D%27none%27%20stroke%3D%27rgba%28255%2C255%2C255%2C.18%29%27/%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2780%27%20y%3D%27360%27%20font-size%3D%2756%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20font-weight%3D%27700%27%20fill%3D%27white%27%3ESistemas%20CCTV%3C/text%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2780%27%20y%3D%27430%27%20font-size%3D%2728%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20fill%3D%27%23d7e6ff%27%3EImagen%20de%20referencia%3C/text%3E%0A%20%20%20%20%3C/svg%3E%0A%20%20%20%20" alt="Imagen de referencia para Sistemas CCTV">
+        </div>
+      </div>
+    </details>
+    
+    </div>
+    <p class="note">El título del servicio funciona como disparador. Al abrirse, muestra el contenido y la imagen.</p>
+  </section>
 
+  <section id="cotiza">
+    <h2 class="section-title">Cotizá ahora</h2>
+    <form onsubmit="sendMail(event)" class="card">
+      <input id="nombre" placeholder="Nombre" required>
+      <input id="email" type="email" placeholder="Email" required>
+      <select id="servicio" required>
+        <option value="">Servicio</option>
+        <option>Proyectos eléctricos BT/MT</option>
+<option>Iluminación y señalización</option>
+<option>Energías Renovables</option>
+<option>Medición y diseño de PAT</option>
+<option>Mantenimiento de Instalaciones eléctricas existentes</option>
+<option>Proyecto de Infraestructura física y lógica de redes</option>
+<option>Modificación en infraestructura existente</option>
+<option>Telefonía</option>
+<option>Sistemas CCTV</option>
+      </select>
+      <textarea id="detalle" placeholder="Detalle del trabajo"></textarea>
+      <button class="btn" type="submit">Enviar</button>
+    </form>
+  </section>
 </main>
 
 <footer>
-© <span id="year"></span> VOLTARK
+  © <span id="year"></span> VOLTARK
 </footer>
 
 <script>
-document.getElementById("year").textContent=new Date().getFullYear();
+document.getElementById("year").textContent = new Date().getFullYear();
 function sendMail(e){
   e.preventDefault();
-  const subject="Solicitud de cotización - "+servicio.value;
-  const body=`Nombre: ${nombre.value}\nEmail: ${email.value}\nServicio: ${servicio.value}\nDetalle: ${detalle.value}`;
-  window.location.href=`mailto:voltark.uy@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const subject = "Solicitud de cotización - " + servicio.value;
+  const body = "Nombre: " + nombre.value + "\n"
+             + "Email: " + email.value + "\n"
+             + "Servicio: " + servicio.value + "\n"
+             + "Detalle: " + detalle.value;
+  window.location.href = "mailto:voltark.uy@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
 }
 </script>
 
