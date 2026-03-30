@@ -520,6 +520,30 @@ function cerrarLightbox(){
   document.getElementById("lightbox").style.display = "none";
 }
 </script>
+  
+<script>
+let posicionCarousel = 0;
 
+function moverCarousel(direccion) {
+  const track = document.getElementById("carousel-track");
+  const imagen = track.querySelector("img");
+  const gap = 12;
+  const paso = imagen.offsetWidth + gap;
+
+  posicionCarousel += direccion * paso;
+
+  const maxDesplazamiento = track.scrollWidth - track.parentElement.offsetWidth;
+
+  if (posicionCarousel < 0) {
+    posicionCarousel = 0;
+  }
+
+  if (posicionCarousel > maxDesplazamiento) {
+    posicionCarousel = maxDesplazamiento;
+  }
+
+  track.style.transform = `translateX(-${posicionCarousel}px)`;
+}
+</script>
 </body>
 </html>
