@@ -1,6 +1,4 @@
-from pathlib import Path
-
-html = """<!doctype html>
+<!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -142,17 +140,52 @@ h1,h2,h3{margin-top:0}
   gap:10px;
   margin-top:22px;
 }
-.trabajos-grid img{
-  width:100%;
-  height:80px;
-  object-fit:cover;
-  border-radius:8px;
-  border:1px solid rgba(255,255,255,.08);
-  cursor:pointer;
-  transition:transform .2s ease;
+.carousel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 22px;
 }
-.trabajos-grid img:hover{
-  transform:scale(1.03);
+.carousel-window {
+  overflow: hidden;
+  width: 100%;
+}
+.carousel-track {
+  display: flex;
+  gap: 12px;
+  transition: transform 0.35s ease;
+}
+.carousel-track img {
+  width: 220px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.08);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.carousel-btn {
+  background: var(--card);
+  color: var(--texto);
+  border: 1px solid rgba(255,255,255,.08);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+}
+.carousel-btn:hover {
+  background: rgba(255,255,255,.08);
+}
+@media (max-width: 640px) {
+  .carousel-track img {
+    width: 170px;
+    height: 110px;
+  }
+  .carousel-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
 }
 .card{
   padding:24px;
@@ -413,18 +446,27 @@ footer{
     </div>
   </section>
 
-  <section id="trabajos">
-    <h2 class="section-title">Trabajos</h2>
-    <div class="trabajos-grid">
-      <img src="trabajo1.jpg" alt="Trabajo 1" onclick="abrirLightbox(this)">
-      <img src="trabajo2.jpg" alt="Trabajo 2" onclick="abrirLightbox(this)">
-      <img src="trabajo3.jpg" alt="Trabajo 3" onclick="abrirLightbox(this)">
-      <img src="trabajo4.jpg" alt="Trabajo 4" onclick="abrirLightbox(this)">
-      <img src="trabajo5.jpg" alt="Trabajo 5" onclick="abrirLightbox(this)">
-      <img src="trabajo6.jpg" alt="Trabajo 6" onclick="abrirLightbox(this)">
-      <img src="trabajo7.jpg" alt="Trabajo 7" onclick="abrirLightbox(this)">
+ <section id="trabajos">
+  <h2 class="section-title">Trabajos</h2>
+
+  <div class="carousel">
+    <button class="carousel-btn prev" onclick="moverCarousel(-1)">&#10094;</button>
+
+    <div class="carousel-window">
+      <div class="carousel-track" id="carousel-track">
+        <img src="trabajo1.jpg" alt="Trabajo 1" onclick="abrirLightbox(this)">
+        <img src="trabajo2.jpg" alt="Trabajo 2" onclick="abrirLightbox(this)">
+        <img src="trabajo3.jpg" alt="Trabajo 3" onclick="abrirLightbox(this)">
+        <img src="trabajo4.jpg" alt="Trabajo 4" onclick="abrirLightbox(this)">
+        <img src="trabajo5.jpg" alt="Trabajo 5" onclick="abrirLightbox(this)">
+        <img src="trabajo6.jpg" alt="Trabajo 6" onclick="abrirLightbox(this)">
+        <img src="trabajo7.jpg" alt="Trabajo 7" onclick="abrirLightbox(this)">
+      </div>
     </div>
-  </section>
+
+    <button class="carousel-btn next" onclick="moverCarousel(1)">&#10095;</button>
+  </div>
+</section>
 
   <section id="consultanos">
     <h2 class="section-title">Consultanos</h2>
@@ -481,8 +523,3 @@ function cerrarLightbox(){
 
 </body>
 </html>
-"""
-
-path = Path("/mnt/data/index_voltark_corregido.html")
-path.write_text(html, encoding="utf-8")
-print(path)
