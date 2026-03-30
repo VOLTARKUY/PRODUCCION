@@ -138,33 +138,29 @@ h1,h2,h3{margin-top:0}
 }
 .trabajos-grid{
   display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:20px;
+  grid-template-columns:repeat(auto-fill,minmax(100px,1fr));
+  gap:10px;
   margin-top:22px;
 }
-.trabajo{
-  background:var(--card);
-  border-radius:18px;
-  padding:24px;
+.trabajos-grid img{
+  width:100%;
+  height:80px;
+  object-fit:cover;
+  border-radius:8px;
   border:1px solid rgba(255,255,255,.08);
-  min-height:180px;
+  cursor:pointer;
+  transition:transform .2s ease;
 }
-.trabajo h3{
-  color:var(--naranja);
-  margin-bottom:10px;
+.trabajos-grid img:hover{
+  transform:scale(1.03);
 }
-.trabajo p{
-  color:var(--muted);
-  line-height:1.55;
-  margin:0;
+.card{
+  padding:24px;
 }
 form{
   display:grid;
   gap:12px;
   margin-top:18px;
-}
-.card{
-  padding:24px;
 }
 input,select,textarea{
   padding:12px;
@@ -179,13 +175,32 @@ footer{
   color:var(--muted);
   margin-top:40px;
 }
-.note{
-  color:var(--muted);
-  font-size:.95rem;
-  margin-top:10px;
+.lightbox{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.9);
+  z-index:9999;
+  justify-content:center;
+  align-items:center;
+  padding:30px;
+}
+.lightbox-img{
+  max-width:90%;
+  max-height:85vh;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+.cerrar{
+  position:absolute;
+  top:18px;
+  right:28px;
+  font-size:42px;
+  color:white;
+  cursor:pointer;
+  line-height:1;
 }
 @media (max-width:900px){
-  .trabajos-grid{grid-template-columns:1fr}
   nav a{margin-left:12px}
 }
 @media (max-width:640px){
@@ -193,59 +208,9 @@ footer{
   nav a{display:inline-block; margin:0 12px 10px 0}
   .service-item summary, .mv-item summary{padding:18px 20px; font-size:1.2rem}
   .service-panel{padding:0 20px 20px 20px}
-}
-@media (max-width: 900px) {
-  .galeria {
-    grid-template-columns: repeat(2, 1fr);
-}
-@media (max-width: 500px) {
- .galeria {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.galeria img {
-  width: 100%;
-  height: 90px;
-  object-fit: cover;
-  border-radius: 8px;
-  cursor: pointer;
-  border: 1px solid rgba(255,255,255,.08);
-  transition: transform .2s ease;
-}
-
-.galeria img:hover {
-  transform: scale(1.03);
-}
-
-.lightbox {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.88);
-  z-index: 9999;
-  align-items: center;
-  justify-content: center;
-  padding: 30px;
-}
-
-.lightbox-img {
-  max-width: 90%;
-  max-height: 85vh;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.5);
-}
-
-.cerrar {
-  position: absolute;
-  top: 18px;
-  right: 28px;
-  font-size: 42px;
-  color: white;
-  cursor: pointer;
-  line-height: 1;
+  .trabajos-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
 }
 </style>
 </head>
@@ -448,23 +413,16 @@ footer{
     </div>
   </section>
 
- <section id="trabajos">
-  <h2 class="section-title">Algunos Trabajos</h2>
-
-  <div class="galeria">
-    <img src="trabajo1.jpg" alt="Trabajo 1" onclick="abrirLightbox(this)">
-    <img src="trabajo2.jpg" alt="Trabajo 2" onclick="abrirLightbox(this)">
-    <img src="trabajo3.jpg" alt="Trabajo 3" onclick="abrirLightbox(this)">
-    <img src="trabajo4.jpg" alt="Trabajo 4" onclick="abrirLightbox(this)">
-    <img src="trabajo5.jpg" alt="Trabajo 5" onclick="abrirLightbox(this)">
-  </div>
-</section>
-
-<div id="lightbox" class="lightbox" onclick="cerrarLightbox()">
-  <span class="cerrar">&times;</span>
-  <img class="lightbox-img" id="lightbox-img" alt="Imagen ampliada">
-</div>
-</section>
+  <section id="trabajos">
+    <h2 class="section-title">Algunos Trabajos</h2>
+    <div class="trabajos-grid">
+      <img src="trabajo1.jpg" alt="Trabajo 1" onclick="abrirLightbox(this)">
+      <img src="trabajo2.jpg" alt="Trabajo 2" onclick="abrirLightbox(this)">
+      <img src="trabajo3.jpg" alt="Trabajo 3" onclick="abrirLightbox(this)">
+      <img src="trabajo4.jpg" alt="Trabajo 4" onclick="abrirLightbox(this)">
+      <img src="trabajo5.jpg" alt="Trabajo 5" onclick="abrirLightbox(this)">
+    </div>
+  </section>
 
   <section id="consultanos">
     <h2 class="section-title">Consultanos</h2>
@@ -493,6 +451,11 @@ footer{
   © <span id="year"></span> VOLTARK
 </footer>
 
+<div id="lightbox" class="lightbox" onclick="cerrarLightbox()">
+  <span class="cerrar">&times;</span>
+  <img class="lightbox-img" id="lightbox-img" alt="Imagen ampliada">
+</div>
+
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
 function sendMail(e){
@@ -504,14 +467,12 @@ function sendMail(e){
              + "Detalle: " + detalle.value;
   window.location.href = "mailto:voltark.uy@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
 }
-<script>
-function abrirLightbox(img) {
+function abrirLightbox(img){
   document.getElementById("lightbox").style.display = "flex";
   document.getElementById("lightbox-img").src = img.src;
   document.getElementById("lightbox-img").alt = img.alt;
 }
-
-function cerrarLightbox() {
+function cerrarLightbox(){
   document.getElementById("lightbox").style.display = "none";
 }
 </script>
@@ -520,6 +481,6 @@ function cerrarLightbox() {
 </html>
 """
 
-path = Path("/mnt/data/index_sin_imagenes_con_trabajos.html")
+path = Path("/mnt/data/index_voltark_corregido.html")
 path.write_text(html, encoding="utf-8")
 print(path)
