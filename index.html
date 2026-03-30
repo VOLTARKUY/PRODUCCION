@@ -134,12 +134,6 @@ h1,h2,h3{margin-top:0}
   line-height:1.65;
   margin:0;
 }
-.trabajos-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(100px,1fr));
-  gap:10px;
-  margin-top:22px;
-}
 .carousel {
   display: flex;
   align-items: center;
@@ -149,15 +143,17 @@ h1,h2,h3{margin-top:0}
 .carousel-window {
   overflow: hidden;
   width: 100%;
+  border-radius: 14px;
 }
 .carousel-track {
   display: flex;
   gap: 12px;
-  transition: transform 0.35s ease;
+  transition: transform 0.5s ease;
+  will-change: transform;
 }
 .carousel-track img {
-  width: 220px;
-  height: 140px;
+  width: 190px;
+  height: 120px;
   object-fit: cover;
   border-radius: 10px;
   border: 1px solid rgba(255,255,255,.08);
@@ -173,10 +169,21 @@ h1,h2,h3{margin-top:0}
   border-radius: 50%;
   cursor: pointer;
   font-size: 20px;
+  flex-shrink: 0;
 }
 .carousel-btn:hover {
   background: rgba(255,255,255,.08);
 }
+@media (max-width: 640px) {
+  .carousel-track img {
+    width: 150px;
+    height: 95px;
+  }
+  .carousel-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
 @media (max-width: 640px) {
   .carousel-track img {
     width: 170px;
@@ -186,7 +193,7 @@ h1,h2,h3{margin-top:0}
     width: 36px;
     height: 36px;
     font-size: 18px;
-}
+  }
 .card{
   padding:24px;
 }
@@ -446,14 +453,23 @@ footer{
     </div>
   </section>
 
- <section id="trabajos">
-  <h2 class="section-title">Trabajos</h2>
+<section id="trabajos">
+  <h2 class="section-title">Algunos Trabajos</h2>
 
   <div class="carousel">
     <button class="carousel-btn prev" onclick="moverCarousel(-1)">&#10094;</button>
 
     <div class="carousel-window">
       <div class="carousel-track" id="carousel-track">
+        <img src="trabajo1.jpg" alt="Trabajo 1" onclick="abrirLightbox(this)">
+        <img src="trabajo2.jpg" alt="Trabajo 2" onclick="abrirLightbox(this)">
+        <img src="trabajo3.jpg" alt="Trabajo 3" onclick="abrirLightbox(this)">
+        <img src="trabajo4.jpg" alt="Trabajo 4" onclick="abrirLightbox(this)">
+        <img src="trabajo5.jpg" alt="Trabajo 5" onclick="abrirLightbox(this)">
+        <img src="trabajo6.jpg" alt="Trabajo 6" onclick="abrirLightbox(this)">
+        <img src="trabajo7.jpg" alt="Trabajo 7" onclick="abrirLightbox(this)">
+
+        <!-- duplicadas para bucle más suave -->
         <img src="trabajo1.jpg" alt="Trabajo 1" onclick="abrirLightbox(this)">
         <img src="trabajo2.jpg" alt="Trabajo 2" onclick="abrirLightbox(this)">
         <img src="trabajo3.jpg" alt="Trabajo 3" onclick="abrirLightbox(this)">
@@ -502,12 +518,13 @@ footer{
 
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
+
 function sendMail(e){
   e.preventDefault();
   const subject = "Solicitud de cotización - " + servicio.value;
-  const body = "Nombre: " + nombre.value + "\\n"
-             + "Email: " + email.value + "\\n"
-             + "Servicio: " + servicio.value + "\\n"
+  const body = "Nombre: " + nombre.value + "\n"
+             + "Email: " + email.value + "\n"
+             + "Servicio: " + servicio.value + "\n"
              + "Detalle: " + detalle.value;
   window.location.href = "mailto:voltark.uy@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
 }
@@ -519,31 +536,47 @@ function abrirLightbox(img){
 function cerrarLightbox(){
   document.getElementById("lightbox").style.display = "none";
 }
-</script>
-  
-<script>
 let posicionCarousel = 0;
+let autoplay;
 
-function moverCarousel(direccion) {
+function obtenerPasoCarousel() {
   const track = document.getElementById("carousel-track");
   const imagen = track.querySelector("img");
-  const gap = 12;
-  const paso = imagen.offsetWidth + gap;
+  const estilo = window.getComputedStyle(track);
+  const gap = parseInt(estilo.gap) || 12;
+  return imagen.offsetWidth + gap;
+}
+function moverCarousel(direccion) {
+  const track = document.getElementById("carousel-track");
+  const paso = obtenerPasoCarousel();
+  const totalOriginales = 5; // cantidad real de imágenes
+  const limiteLoop = paso * totalOriginales;
 
   posicionCarousel += direccion * paso;
 
-  const maxDesplazamiento = track.scrollWidth - track.parentElement.offsetWidth;
-
-  if (posicionCarousel < 0) {
+  if (posicionCarousel >= limiteLoop) {
     posicionCarousel = 0;
   }
-
-  if (posicionCarousel > maxDesplazamiento) {
-    posicionCarousel = maxDesplazamiento;
+  if (posicionCarousel < 0) {
+    posicionCarousel = limiteLoop - paso;
   }
-
   track.style.transform = `translateX(-${posicionCarousel}px)`;
 }
+function iniciarAutoplay() {
+  autoplay = setInterval(() => {
+    moverCarousel(1);
+  }, 2500);
+}
+function detenerAutoplay() {
+  clearInterval(autoplay);
+}
+window.addEventListener("load", () => {
+  iniciarAutoplay();
+
+  const carousel = document.querySelector(".carousel");
+  carousel.addEventListener("mouseenter", detenerAutoplay);
+  carousel.addEventListener("mouseleave", iniciarAutoplay);
+});
 </script>
 </body>
 </html>
