@@ -199,20 +199,53 @@ footer{
     grid-template-columns: repeat(2, 1fr);
 }
 @media (max-width: 500px) {
-  .galeria {
-    grid-template-columns: 1fr;
-}
-  .galeria {
+ .galeria {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
+  margin-top: 20px;
 }
 
 .galeria img {
   width: 100%;
-  height: 140px;
+  height: 90px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,.08);
+  transition: transform .2s ease;
+}
+
+.galeria img:hover {
+  transform: scale(1.03);
+}
+
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.88);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.lightbox-img {
+  max-width: 90%;
+  max-height: 85vh;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.5);
+}
+
+.cerrar {
+  position: absolute;
+  top: 18px;
+  right: 28px;
+  font-size: 42px;
+  color: white;
+  cursor: pointer;
+  line-height: 1;
 }
 </style>
 </head>
@@ -419,13 +452,18 @@ footer{
   <h2 class="section-title">Algunos Trabajos</h2>
 
   <div class="galeria">
-    <img src="trabajo1.jpg" alt="Trabajo 1">
-    <img src="trabajo2.jpg" alt="Trabajo 2">
-    <img src="trabajo3.jpg" alt="Trabajo 3">
-    <img src="trabajo4.jpg" alt="Trabajo 4">
-    <img src="trabajo5.jpg" alt="Trabajo 5">
-    <img src="trabajo6.jpg" alt="Trabajo 6">
+    <img src="trabajo1.jpg" alt="Trabajo 1" onclick="abrirLightbox(this)">
+    <img src="trabajo2.jpg" alt="Trabajo 2" onclick="abrirLightbox(this)">
+    <img src="trabajo3.jpg" alt="Trabajo 3" onclick="abrirLightbox(this)">
+    <img src="trabajo4.jpg" alt="Trabajo 4" onclick="abrirLightbox(this)">
+    <img src="trabajo5.jpg" alt="Trabajo 5" onclick="abrirLightbox(this)">
   </div>
+</section>
+
+<div id="lightbox" class="lightbox" onclick="cerrarLightbox()">
+  <span class="cerrar">&times;</span>
+  <img class="lightbox-img" id="lightbox-img" alt="Imagen ampliada">
+</div>
 </section>
 
   <section id="consultanos">
@@ -465,6 +503,16 @@ function sendMail(e){
              + "Servicio: " + servicio.value + "\\n"
              + "Detalle: " + detalle.value;
   window.location.href = "mailto:voltark.uy@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+}
+<script>
+function abrirLightbox(img) {
+  document.getElementById("lightbox").style.display = "flex";
+  document.getElementById("lightbox-img").src = img.src;
+  document.getElementById("lightbox-img").alt = img.alt;
+}
+
+function cerrarLightbox() {
+  document.getElementById("lightbox").style.display = "none";
 }
 </script>
 
