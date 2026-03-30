@@ -1,4 +1,6 @@
-<!doctype html>
+from pathlib import Path
+
+html = """<!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -51,20 +53,14 @@ nav a:hover{color:var(--naranja)}
 }
 .hero{
   display:grid;
-  grid-template-columns:1.1fr .9fr;
+  grid-template-columns:1fr;
   gap:28px;
   align-items:center;
-}
-.hero-box{
-  background:linear-gradient(180deg, rgba(18,62,107,.38), rgba(8,28,48,.65));
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:18px;
-  padding:28px;
 }
 h1,h2,h3{margin-top:0}
 .lead{
   color:var(--muted);
-  max-width:800px;
+  max-width:850px;
   line-height:1.65;
   font-size:1.02rem;
 }
@@ -88,7 +84,7 @@ h1,h2,h3{margin-top:0}
   gap:18px;
   margin-top:22px;
 }
-.service-item, .mv-item{
+.service-item, .mv-item, .card{
   background:var(--card);
   border-radius:22px;
   border:1px solid rgba(255,255,255,.08);
@@ -120,11 +116,7 @@ h1,h2,h3{margin-top:0}
   content:"−";
 }
 .service-panel{
-  display:grid;
-  grid-template-columns:1.25fr .75fr;
-  gap:24px;
   padding:0 28px 28px 28px;
-  align-items:start;
 }
 .service-info p{
   color:var(--muted);
@@ -136,21 +128,6 @@ h1,h2,h3{margin-top:0}
   padding-left:22px;
   line-height:1.65;
 }
-.service-media{
-  width:100%;
-  min-height:260px;
-  border-radius:18px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.03);
-}
-.service-media img{
-  width:100%;
-  height:100%;
-  min-height:260px;
-  object-fit:cover;
-  display:block;
-}
 .mv-content{
   padding:0 24px 22px 24px;
 }
@@ -159,11 +136,26 @@ h1,h2,h3{margin-top:0}
   line-height:1.65;
   margin:0;
 }
-.card{
-  background:var(--card);
-  border-radius:18px;
-  padding:24px;
+.trabajos-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(100px,1fr));
+  gap:10px;
+  margin-top:22px;
+}
+.trabajos-grid img{
+  width:100%;
+  height:80px;
+  object-fit:cover;
+  border-radius:8px;
   border:1px solid rgba(255,255,255,.08);
+  cursor:pointer;
+  transition:transform .2s ease;
+}
+.trabajos-grid img:hover{
+  transform:scale(1.03);
+}
+.card{
+  padding:24px;
 }
 form{
   display:grid;
@@ -183,22 +175,42 @@ footer{
   color:var(--muted);
   margin-top:40px;
 }
-.note{
-  color:var(--muted);
-  font-size:.95rem;
-  margin-top:10px;
+.lightbox{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.9);
+  z-index:9999;
+  justify-content:center;
+  align-items:center;
+  padding:30px;
+}
+.lightbox-img{
+  max-width:90%;
+  max-height:85vh;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+.cerrar{
+  position:absolute;
+  top:18px;
+  right:28px;
+  font-size:42px;
+  color:white;
+  cursor:pointer;
+  line-height:1;
 }
 @media (max-width:900px){
-  .hero, .service-panel{grid-template-columns:1fr}
   nav a{margin-left:12px}
-  .service-media{min-height:220px}
-  .service-media img{min-height:220px}
 }
 @media (max-width:640px){
   .nav{flex-direction:column; align-items:flex-start}
   nav a{display:inline-block; margin:0 12px 10px 0}
   .service-item summary, .mv-item summary{padding:18px 20px; font-size:1.2rem}
   .service-panel{padding:0 20px 20px 20px}
+  .trabajos-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
 }
 </style>
 </head>
@@ -212,6 +224,7 @@ footer{
     <nav>
       <a href="#mision-vision">Misión y Visión</a>
       <a href="#servicios">Servicios</a>
+      <a href="#trabajos">Trabajos</a>
       <a href="#consultanos">Consultanos</a>
     </nav>
   </div>
@@ -223,13 +236,13 @@ footer{
       <h1>Sobre nosotros</h1>
       <p class="lead">
         Voltark Ingeniería Eléctrica es una empresa especializada en soluciones de ingeniería eléctrica, orientada al desarrollo, fabricación e implementación de sistemas eléctricos para obras y proyectos de diversa escala.<br><br>
-Diseñamos y potenciamos el futuro con soluciones eléctricas eficientes y seguras.<br><br>
+        Diseñamos y potenciamos el futuro con soluciones eléctricas eficientes y seguras.<br><br>
         Contamos con experiencia en todas las aplicaciones de la energía eléctrica. Realizamos trabajos acorde a las necesidades de cada cliente.<br><br>
         Nos enfocamos en brindar respuestas técnicas concretas en obra, combinando ingeniería, ejecución y cumplimiento normativo.
       </p>
       <a href="#consultanos" class="btn">Consultanos</a>
     </div>
-    </section>
+  </section>
 
   <section id="mision-vision">
     <h2 class="section-title">Misión y Visión</h2>
@@ -261,192 +274,174 @@ Diseñamos y potenciamos el futuro con soluciones eléctricas eficientes y segur
   <section id="servicios">
     <h2 class="section-title">Servicios</h2>
     <div class="services-stack">
-      
-    <details class="service-item" open>
-      <summary>Proyectos eléctricos BT/MT</summary>
-      <div class="service-panel">
-        <div class="service-info">
-          <p>Desarrollo integral de proyectos eléctricos en baja y media tensión, desde el
-relevamiento inicial hasta la ingeniería de detalle. Incluye dimensionamiento,
-protecciones, selectividad y cumplimiento normativo.</p>
-          <ul>
-            <li>Diseño y planificación de proyectos eléctricos</li>
-<li>Analisis y Correcciones de Energia</li>
-<li>Construccion de Tableros, esquemas y documentación técnica</li>
-<li>Soluciones adaptadas a industria, comercio y edificios</li>
-          </ul>
+
+      <details class="service-item" open>
+        <summary>Proyectos eléctricos BT/MT</summary>
+        <div class="service-panel">
+          <div class="service-info">
+            <p>Desarrollo integral de proyectos eléctricos en baja y media tensión, desde el relevamiento inicial hasta la ingeniería de detalle. Incluye dimensionamiento, protecciones, selectividad y cumplimiento normativo.</p>
+            <ul>
+              <li>Diseño y planificación de proyectos eléctricos</li>
+              <li>Analisis y Correcciones de Energia</li>
+              <li>Construccion de Tableros, esquemas y documentación técnica</li>
+              <li>Soluciones adaptadas a industria, comercio y edificios</li>
+            </ul>
+          </div>
         </div>
-        <div class="service-media">
-          <img src="Imagen-1.png" alt="Imagen de referencia para Proyectos eléctricos BT/MT">
+      </details>
+
+      <details class="service-item">
+        <summary>Iluminación y señalización</summary>
+        <div class="service-panel">
+          <div class="service-info">
+            <p>Diseño e implementación de sistemas de iluminación eficientes y funcionales, tanto para entornos industriales como comerciales. Incluye cálculo lumínico, optimización energética y señalización de seguridad.</p>
+            <ul>
+              <li>Diseño de iluminación interior y exterior</li>
+              <li>Cálculo y distribución de luminarias</li>
+              <li>Señalización técnica y de seguridad</li>
+              <li>Optimización visual y energética</li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </details>
-    
-    <details class="service-item" >
-      <summary>Iluminación y señalización</summary>
-      <div class="service-panel">
-        <div class="service-info">
-          <p>Diseño e implementación de sistemas de iluminación eficientes y funcionales, tanto para
-entornos industriales como comerciales. Incluye cálculo lumínico, optimización
-energética y señalización de seguridad.</p>
-          <ul>
-            <li>Diseño de iluminación interior y exterior</li>
-<li>Cálculo y distribución de luminarias</li>
-<li>Señalización técnica y de seguridad</li>
-<li>Optimización visual y energética</li>
-          </ul>
+      </details>
+
+      <details class="service-item">
+        <summary>Energías Renovables</summary>
+        <div class="service-panel">
+          <div class="service-info">
+            <p>Soluciones basadas en generación sustentable, principalmente sistemas fotovoltaicos. Evaluación de factibilidad, diseño, instalación y puesta en marcha.</p>
+            <ul>
+              <li>Evaluación técnica de alternativas renovables</li>
+              <li>Dimensionamiento preliminar de sistemas</li>
+              <li>Análisis de viabilidad</li>
+              <li>Soluciones orientadas a eficiencia energética</li>
+            </ul>
+          </div>
         </div>
-        <div class="service-media">
-          <img src="Imagen-2" alt="Imagen de referencia para Iluminación y señalización">
+      </details>
+
+      <details class="service-item">
+        <summary>Medición y diseño de PAT</summary>
+        <div class="service-panel">
+          <div class="service-info">
+            <p>Estudios de resistividad del terreno y diseño de sistemas de puesta a tierra eficientes. Garantizamos seguridad eléctrica, protección de equipos y cumplimiento de normativas vigentes.</p>
+            <ul>
+              <li>Medición de resistencia de puesta a tierra</li>
+              <li>Diseño de malla de PAT</li>
+              <li>Selección de materiales y configuración</li>
+              <li>Verificación de desempeño del sistema</li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </details>
-    
-    <details class="service-item" >
-      <summary>Energías Renovables</summary>
-      <div class="service-panel">
-        <div class="service-info">
-          <p>Soluciones basadas en generación sustentable, principalmente sistemas fotovoltaicos.
-Evaluación de factibilidad, diseño, instalación y puesta en marcha</p>
-          <ul>
-            <li>Evaluación técnica de alternativas renovables</li>
-<li>Dimensionamiento preliminar de sistemas</li>
-<li>Análisis de viabilidad</li>
-<li>Soluciones orientadas a eficiencia energética</li>
-          </ul>
+      </details>
+
+      <details class="service-item">
+        <summary>Mantenimiento de Instalaciones eléctricas existentes</summary>
+        <div class="service-panel">
+          <div class="service-info">
+            <p>Diagnóstico y mantenimiento para preservar la seguridad y continuidad operativa.</p>
+            <ul>
+              <li>Inspección técnica de instalaciones existentes</li>
+              <li>Mantenimiento preventivo y correctivo</li>
+              <li>Revisión de tableros, protecciones y circuitos</li>
+              <li>Detección de puntos críticos y mejoras</li>
+            </ul>
+          </div>
         </div>
-        <div class="service-media">
-          <img src="Imagen-3" alt="Imagen de referencia para Energías Renovables">
+      </details>
+
+      <details class="service-item">
+        <summary>Proyecto de Infraestructura física y lógica de redes</summary>
+        <div class="service-panel">
+          <div class="service-info">
+            <p>Diseño completo de redes de datos, topología, direccionamiento IP y arquitectura de red. Soluciones escalables y adaptadas a cada cliente.</p>
+            <ul>
+              <li>Canalizaciones, rack y distribución física</li>
+              <li>Puestos de red y organización de cableado</li>
+              <li>Esquema lógico de red</li>
+              <li>Preparación para entornos empresariales</li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </details>
-    
-    <details class="service-item" >
-      <summary>Medición y diseño de PAT</summary>
-      <div class="service-panel">
-        <div class="service-info">
-          <p>Estudios de resistividad del terreno y diseño de sistemas de puesta a tierra (PAT) eficientes.
-Garantizamos seguridad eléctrica, protección de equipos y cumplimiento de normativas
-vigentes.</p>
-          <ul>
-            <li>Medición de resistencia de puesta a tierra</li>
-<li>Diseño de malla de PAT</li>
-<li>Selección de materiales y configuración</li>
-<li>Verificación de desempeño del sistema</li>
-          </ul>
+      </details>
+
+      <details class="service-item">
+        <summary>Modificación en infraestructura existente</summary>
+        <div class="service-panel">
+          <div class="service-info">
+            <p>Adecuaciones y ampliaciones sobre instalaciones ya operativas.</p>
+            <ul>
+              <li>Relevamiento de infraestructura instalada</li>
+              <li>Ampliaciones y redistribución</li>
+              <li>Reorganización de canalizaciones y puestos</li>
+              <li>Mejora funcional sin reemplazo total</li>
+            </ul>
+          </div>
         </div>
-        <div class="service-media">
-          <img src="Imagen-4" alt="Imagen de referencia para Medición y diseño de PAT">
+      </details>
+
+      <details class="service-item">
+        <summary>Telefonía</summary>
+        <div class="service-panel">
+          <div class="service-info">
+            <p>Implementación y adecuación de soluciones de telefonía para entornos corporativos y comerciales.</p>
+            <ul>
+              <li>Infraestructura para telefonía</li>
+              <li>Ordenamiento de cableado asociado</li>
+              <li>Distribución de puntos</li>
+              <li>Adecuación a necesidades operativas</li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </details>
-    
-    <details class="service-item" >
-      <summary>Mantenimiento de Instalaciones eléctricas existentes</summary>
-      <div class="service-panel">
-        <div class="service-info">
-          <p>Diagnóstico y mantenimiento para preservar la seguridad y continuidad operativa.</p>
-          <ul>
-            <li>Inspección técnica de instalaciones existentes</li>
-<li>Mantenimiento preventivo y correctivo</li>
-<li>Revisión de tableros, protecciones y circuitos</li>
-<li>Detección de puntos críticos y mejoras</li>
-          </ul>
+      </details>
+
+      <details class="service-item">
+        <summary>Sistemas CCTV</summary>
+        <div class="service-panel">
+          <div class="service-info">
+            <p>Diseño e instalación de sistemas de videovigilancia para control y seguridad.</p>
+            <ul>
+              <li>Ubicación estratégica de cámaras</li>
+              <li>Canalización e infraestructura asociada</li>
+              <li>Integración con red y energía</li>
+              <li>Soluciones para vigilancia y monitoreo</li>
+            </ul>
+          </div>
         </div>
-        <div class="service-media">
-          <img src="Imagen-5" alt="Imagen de referencia para Mantenimiento de Instalaciones eléctricas existentes">
-        </div>
-      </div>
-    </details>
-    
-    <details class="service-item" >
-      <summary>Proyecto de Infraestructura física y lógica de redes</summary>
-      <div class="service-panel">
-        <div class="service-info">
-          <p>Diseño completo de redes de datos, topología,direccionamiento IP y arquitectura de red. Soluciones escalables y adaptadas a cada
-cliente.</p>
-          <ul>
-            <li>Canalizaciones, rack y distribución física</li>
-<li>Puestos de red y organización de cableado</li>
-<li>Esquema lógico de red</li>
-<li>Preparación para entornos empresariales</li>
-          </ul>
-        </div>
-        <div class="service-media">
-          <img src="Imagen-6" alt="Imagen de referencia para Proyecto de Infraestructura física y lógica de redes">
-        </div>
-      </div>
-    </details>
-    
-    <details class="service-item" >
-      <summary>Modificación en infraestructura existente</summary>
-      <div class="service-panel">
-        <div class="service-info">
-          <p>Adecuaciones y ampliaciones sobre instalaciones ya operativas.</p>
-          <ul>
-            <li>Relevamiento de infraestructura instalada</li>
-<li>Ampliaciones y redistribución</li>
-<li>Reorganización de canalizaciones y puestos</li>
-<li>Mejora funcional sin reemplazo total</li>
-          </ul>
-        </div>
-        <div class="service-media">
-          <img src="Imagen-7" alt="Imagen de referencia para Modificación en infraestructura existente">
-        </div>
-      </div>
-    </details>
-    
-    <details class="service-item" >
-      <summary>Telefonía</summary>
-      <div class="service-panel">
-        <div class="service-info">
-          <p>Implementación y adecuación de soluciones de telefonía para entornos corporativos y comerciales.</p>
-          <ul>
-            <li>Infraestructura para telefonía</li>
-<li>Ordenamiento de cableado asociado</li>
-<li>Distribución de puntos</li>
-<li>Adecuación a necesidades operativas</li>
-          </ul>
-        </div>
-        <div class="service-media">
-      </div>
-    </details>
-    
-    <details class="service-item" >
-      <summary>Sistemas CCTV</summary>
-      <div class="service-panel">
-        <div class="service-info">
-          <p>Diseño e instalación de sistemas de videovigilancia para control y seguridad.</p>
-          <ul>
-            <li>Ubicación estratégica de cámaras</li>
-<li>Canalización e infraestructura asociada</li>
-<li>Integración con red y energía</li>
-<li>Soluciones para vigilancia y monitoreo</li>
-          </ul>
-        </div>
-        <div class="service-media">
-          <img src="Imagen-8" alt="Imagen de referencia para Sistemas CCTV">
-        </div>
-      </div>
-    </details>
+      </details>
+
+    </div>
   </section>
 
-  <section id="cotiza">
-    <h2 class="section-title">Cotizá ahora</h2>
+  <section id="trabajos">
+    <h2 class="section-title">Trabajos</h2>
+    <div class="trabajos-grid">
+      <img src="trabajo1.jpg" alt="Trabajo 1" onclick="abrirLightbox(this)">
+      <img src="trabajo2.jpg" alt="Trabajo 2" onclick="abrirLightbox(this)">
+      <img src="trabajo3.jpg" alt="Trabajo 3" onclick="abrirLightbox(this)">
+      <img src="trabajo4.jpg" alt="Trabajo 4" onclick="abrirLightbox(this)">
+      <img src="trabajo5.jpg" alt="Trabajo 5" onclick="abrirLightbox(this)">
+      <img src="trabajo6.jpg" alt="Trabajo 6" onclick="abrirLightbox(this)">
+      <img src="trabajo7.jpg" alt="Trabajo 7" onclick="abrirLightbox(this)">
+    </div>
+  </section>
+
+  <section id="consultanos">
+    <h2 class="section-title">Consultanos</h2>
     <form onsubmit="sendMail(event)" class="card">
       <input id="nombre" placeholder="Nombre" required>
       <input id="email" type="email" placeholder="Email" required>
       <select id="servicio" required>
         <option value="">Servicio</option>
         <option>Proyectos eléctricos BT/MT</option>
-<option>Iluminación y señalización</option>
-<option>Energías Renovables</option>
-<option>Medición y diseño de PAT</option>
-<option>Mantenimiento de Instalaciones eléctricas existentes</option>
-<option>Proyecto de Infraestructura física y lógica de redes</option>
-<option>Modificación en infraestructura existente</option>
-<option>Telefonía</option>
-<option>Sistemas CCTV</option>
+        <option>Iluminación y señalización</option>
+        <option>Energías Renovables</option>
+        <option>Medición y diseño de PAT</option>
+        <option>Mantenimiento de Instalaciones eléctricas existentes</option>
+        <option>Proyecto de Infraestructura física y lógica de redes</option>
+        <option>Modificación en infraestructura existente</option>
+        <option>Telefonía</option>
+        <option>Sistemas CCTV</option>
       </select>
       <textarea id="detalle" placeholder="Detalle del trabajo"></textarea>
       <button class="btn" type="submit">Enviar</button>
@@ -458,18 +453,36 @@ cliente.</p>
   © <span id="year"></span> VOLTARK
 </footer>
 
+<div id="lightbox" class="lightbox" onclick="cerrarLightbox()">
+  <span class="cerrar">&times;</span>
+  <img class="lightbox-img" id="lightbox-img" alt="Imagen ampliada">
+</div>
+
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
 function sendMail(e){
   e.preventDefault();
   const subject = "Solicitud de cotización - " + servicio.value;
-  const body = "Nombre: " + nombre.value + "\n"
-             + "Email: " + email.value + "\n"
-             + "Servicio: " + servicio.value + "\n"
+  const body = "Nombre: " + nombre.value + "\\n"
+             + "Email: " + email.value + "\\n"
+             + "Servicio: " + servicio.value + "\\n"
              + "Detalle: " + detalle.value;
   window.location.href = "mailto:voltark.uy@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+}
+function abrirLightbox(img){
+  document.getElementById("lightbox").style.display = "flex";
+  document.getElementById("lightbox-img").src = img.src;
+  document.getElementById("lightbox-img").alt = img.alt;
+}
+function cerrarLightbox(){
+  document.getElementById("lightbox").style.display = "none";
 }
 </script>
 
 </body>
 </html>
+"""
+
+path = Path("/mnt/data/index_voltark_corregido.html")
+path.write_text(html, encoding="utf-8")
+print(path)
