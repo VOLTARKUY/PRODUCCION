@@ -1,4 +1,3 @@
-<!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -21,27 +20,58 @@ body{
   color:var(--texto);
 }
 header{
-  background:#061a2f;
-  border-bottom:3px solid var(--naranja);
-  position:sticky;
-  top:0;
-  z-index:10;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(6, 26, 47, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 8px 24px rgba(0,0,0,.22);
+}
+  header{
+  width: 100%;
 }
 .nav{
-  max-width:1200px;
-  margin:auto;
-  padding:15px 18px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.brand img{height:46px}
-nav a{
-  color:var(--texto);
-  margin-left:18px;
-  text-decoration:none;
-  font-weight:600;
+.brand{
+  display:flex;
+  align-items:center;
+}
+  nav{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.brand img{
+  height: clamp(90px, 10vw, 170px);
+  width: auto;
+}
+.brand img:hover{
+  filter:
+    drop-shadow(0 0 10px rgba(255,138,28,0.9))
+    drop-shadow(0 0 18px rgba(255,138,28,0.6))
+    drop-shadow(0 0 30px rgba(255,255,255,0.25));
+
+  transform: scale(1.05);
+}
+  nav a{
+  color: var(--texto);
+  margin-left: 28px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+  transition: color 0.2s ease;
+}
+nav a:hover{
+  color:var(--naranja);
 }
 nav a:hover{color:var(--naranja)}
 .container{
@@ -134,37 +164,76 @@ h1,h2,h3{margin-top:0}
   line-height:1.65;
   margin:0;
 }
-.trabajos-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(100px,1fr));
-  gap:10px;
+
+.carousel{
+  display:flex;
+  align-items:center;
+  gap:12px;
   margin-top:22px;
 }
-.trabajos-grid img{
+.carousel-window{
+  overflow:hidden;
   width:100%;
-  height:80px;
+  border-radius:14px;
+}
+.carousel-track{
+  display:flex;
+  gap:12px;
+  transition:transform .5s ease;
+  will-change:transform;
+}
+.carousel-track img{
+  width:190px;
+  height:120px;
   object-fit:cover;
-  border-radius:8px;
+  border-radius:10px;
   border:1px solid rgba(255,255,255,.08);
   cursor:pointer;
-  transition:transform .2s ease;
+  flex-shrink:0;
 }
-.trabajos-grid img:hover{
-  transform:scale(1.03);
+.carousel-btn{
+  background: var(--card);
+  color: var(--texto);
+  border: 1px solid rgba(255,255,255,.08);
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:20px;
+  flex-shrink:0;
 }
-.card{
-  padding:24px;
+.carousel-btn:hover{
+  background: rgba(255,255,255,.08);
 }
-form{
+.card{padding:24px;}
+.form-grid{
   display:grid;
+  grid-template-columns:1fr 1fr 1.2fr auto;
   gap:12px;
-  margin-top:18px;
+  align-items:start;
+}
+.form-grid textarea{
+  grid-column:1 / -1;
+  min-height:110px;
+  resize:vertical;
 }
 input,select,textarea{
-  padding:12px;
-  border-radius:8px;
-  border:none;
+  width:100%;
+  padding:12px 14px;
+  border-radius:10px;
+  border:1px solid transparent;
   font:inherit;
+  background:#f3f6fb;
+  color:#0b1220;
+}
+input:focus,select:focus,textarea:focus{
+  outline:none;
+  border-color:var(--naranja);
+  box-shadow:0 0 0 3px rgba(255,138,28,.18);
+}
+.enviar-btn{
+  min-width:130px;
+  min-height:46px;
 }
 footer{
   background:#020b14;
@@ -173,75 +242,63 @@ footer{
   color:var(--muted);
   margin-top:40px;
 }
-.lightbox{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.9);
-  z-index:9999;
-  justify-content:center;
-  align-items:center;
-  padding:30px;
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  cursor: zoom-out;
 }
-.lightbox-img{
-  max-width:90%;
-  max-height:85vh;
-  border-radius:12px;
-  box-shadow:0 10px 30px rgba(0,0,0,.5);
+.lightbox-img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+  .lightbox-img {
+  animation: zoomIn 0.25s ease;
+}
+@keyframes zoomIn {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
 }
 .cerrar{
-  position:absolute;
-  top:18px;
-  right:28px;
-  font-size:42px;
+  background:transparent;
+  border:none;
+  position:static;
+  font-size:32px;
   color:white;
   cursor:pointer;
   line-height:1;
 }
-  .form-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  align-items: center;
-}
-.form-grid textarea {
-  grid-column: span 2;
-  resize: none;
-  height: 45px;
-}
-.enviar-btn {
-  height: 45px;
-}
-@media (max-width: 900px) {
-  .form-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-  .form-grid textarea {
-    grid-column: span 2;
-}
-@media (max-width: 500px) {
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-  .form-grid textarea {
-    grid-column: span 1;
+@media (max-width:640px){
+  .brand img {
     height: 80px;
-  }
-  .enviar-btn {
-    width: 100%;
 }
 @media (max-width:900px){
+  .brand img{height:60px;}
   nav a{margin-left:12px}
+  .form-grid{grid-template-columns:1fr 1fr;}
+  .enviar-btn{width:100%;}
 }
 @media (max-width:640px){
   .nav{flex-direction:column; align-items:flex-start}
   nav a{display:inline-block; margin:0 12px 10px 0}
   .service-item summary, .mv-item summary{padding:18px 20px; font-size:1.2rem}
   .service-panel{padding:0 20px 20px 20px}
-  .trabajos-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
+  .carousel-track img{width:150px; height:95px;}
+  .carousel-btn{width:36px; height:36px; font-size:18px;}
+  .form-grid{grid-template-columns:1fr;}
 }
+
 </style>
 </head>
 <body>
@@ -443,39 +500,57 @@ footer{
     </div>
   </section>
 
-  <section id="trabajos">
-    <h2 class="section-title">Trabajos</h2>
-    <div class="trabajos-grid">
-      <img src="trabajo1.jpg" alt="Trabajo 1" onclick="abrirLightbox(this)">
-      <img src="trabajo2.jpg" alt="Trabajo 2" onclick="abrirLightbox(this)">
-      <img src="trabajo3.jpg" alt="Trabajo 3" onclick="abrirLightbox(this)">
-      <img src="trabajo4.jpg" alt="Trabajo 4" onclick="abrirLightbox(this)">
-      <img src="trabajo5.jpg" alt="Trabajo 5" onclick="abrirLightbox(this)">
-      <img src="trabajo6.jpg" alt="Trabajo 6" onclick="abrirLightbox(this)">
-      <img src="trabajo7.jpg" alt="Trabajo 7" onclick="abrirLightbox(this)">
+<section id="trabajos">
+  <h2 class="section-title">Algunos Trabajos</h2>
+
+  <div class="carousel">
+    <button class="carousel-btn prev" onclick="moverCarousel(-1)">&#10094;</button>
+
+    <div class="carousel-window">
+      <div class="carousel-track" id="carousel-track">
+        <img src="trabajo1.jpg" alt="Trabajo 1" onclick="abrirLightbox(this)">
+        <img src="trabajo2.jpg" alt="Trabajo 2" onclick="abrirLightbox(this)">
+        <img src="trabajo3.jpg" alt="Trabajo 3" onclick="abrirLightbox(this)">
+        <img src="trabajo4.jpg" alt="Trabajo 4" onclick="abrirLightbox(this)">
+        <img src="trabajo5.jpg" alt="Trabajo 5" onclick="abrirLightbox(this)">
+        <img src="trabajo6.jpg" alt="Trabajo 6" onclick="abrirLightbox(this)">
+        <img src="trabajo7.jpg" alt="Trabajo 7" onclick="abrirLightbox(this)">
+
+        <!-- duplicadas para bucle más suave -->
+        <img src="trabajo1.jpg" alt="Trabajo 1" onclick="abrirLightbox(this)">
+        <img src="trabajo2.jpg" alt="Trabajo 2" onclick="abrirLightbox(this)">
+        <img src="trabajo3.jpg" alt="Trabajo 3" onclick="abrirLightbox(this)">
+        <img src="trabajo4.jpg" alt="Trabajo 4" onclick="abrirLightbox(this)">
+        <img src="trabajo5.jpg" alt="Trabajo 5" onclick="abrirLightbox(this)">
+        <img src="trabajo6.jpg" alt="Trabajo 6" onclick="abrirLightbox(this)">
+        <img src="trabajo7.jpg" alt="Trabajo 7" onclick="abrirLightbox(this)">
+      </div>
     </div>
-  </section>
+
+    <button class="carousel-btn next" onclick="moverCarousel(1)">&#10095;</button>
+  </div>
+</section>
 
   <section id="consultanos">
     <h2 class="section-title">Consultanos</h2>
-   <form onsubmit="sendMail(event)" class="form-grid card">
-  <input id="nombre" placeholder="Nombre" required>
-  <input id="email" type="email" placeholder="Email" required>
-  <select id="servicio" required>
-    <option value="">Servicio</option>
-    <option>Proyectos eléctricos BT/MT</option>
-    <option>Iluminación y señalización</option>
-    <option>Energías Renovables</option>
-    <option>Medición y diseño de PAT</option>
-    <option>Mantenimiento de Instalaciones eléctricas existentes</option>
-    <option>Proyecto de Infraestructura física y lógica de redes</option>
-    <option>Modificación en infraestructura existente</option>
-    <option>Telefonía</option>
-    <option>Sistemas CCTV</option>
-  </select>
-  <textarea id="detalle" placeholder="Detalle del trabajo"></textarea>
-  <button class="btn enviar-btn" type="submit">Enviar</button>
-</form>
+    <form onsubmit="sendMail(event)" class="card form-grid">
+      <input id="nombre" placeholder="Nombre" required>
+      <input id="email" type="email" placeholder="Email" required>
+      <select id="servicio" required>
+        <option value="">Servicio</option>
+        <option>Proyectos eléctricos BT/MT</option>
+        <option>Iluminación y señalización</option>
+        <option>Energías Renovables</option>
+        <option>Medición y diseño de PAT</option>
+        <option>Mantenimiento de Instalaciones eléctricas existentes</option>
+        <option>Proyecto de Infraestructura física y lógica de redes</option>
+        <option>Modificación en infraestructura existente</option>
+        <option>Telefonía</option>
+        <option>Sistemas CCTV</option>
+      </select>
+      <textarea id="detalle" placeholder="Detalle del trabajo"></textarea>
+      <button class="btn enviar-btn" type="submit">Enviar</button>
+    </form>
   </section>
 </main>
 
@@ -484,18 +559,20 @@ footer{
 </footer>
 
 <div id="lightbox" class="lightbox" onclick="cerrarLightbox()">
-  <span class="cerrar">&times;</span>
   <img class="lightbox-img" id="lightbox-img" alt="Imagen ampliada">
+</div>
+  </div>
 </div>
 
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
+
 function sendMail(e){
   e.preventDefault();
   const subject = "Solicitud de cotización - " + servicio.value;
-  const body = "Nombre: " + nombre.value + "\\n"
-             + "Email: " + email.value + "\\n"
-             + "Servicio: " + servicio.value + "\\n"
+  const body = "Nombre: " + nombre.value + "\n"
+             + "Email: " + email.value + "\n"
+             + "Servicio: " + servicio.value + "\n"
              + "Detalle: " + detalle.value;
   window.location.href = "mailto:voltark.uy@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
 }
@@ -504,10 +581,51 @@ function abrirLightbox(img){
   document.getElementById("lightbox-img").src = img.src;
   document.getElementById("lightbox-img").alt = img.alt;
 }
-function cerrarLightbox(){
+function cerrarLightbox(e){
+  if (e) e.stopPropagation();
   document.getElementById("lightbox").style.display = "none";
 }
-</script>
+let posicionCarousel = 0;
+let autoplay;
 
+function obtenerPasoCarousel() {
+  const track = document.getElementById("carousel-track");
+  const imagen = track.querySelector("img");
+  const estilo = window.getComputedStyle(track);
+  const gap = parseInt(estilo.gap) || 12;
+  return imagen.offsetWidth + gap;
+}
+function moverCarousel(direccion) {
+  const track = document.getElementById("carousel-track");
+  const paso = obtenerPasoCarousel();
+  const totalOriginales = 7;
+  const limiteLoop = paso * totalOriginales;
+
+  posicionCarousel += direccion * paso;
+
+  if (posicionCarousel >= limiteLoop) {
+    posicionCarousel = 0;
+  }
+  if (posicionCarousel < 0) {
+    posicionCarousel = limiteLoop - paso;
+  }
+  track.style.transform = `translateX(-${posicionCarousel}px)`;
+}
+function iniciarAutoplay() {
+  autoplay = setInterval(() => {
+    moverCarousel(1);
+  }, 2500);
+}
+function detenerAutoplay() {
+  clearInterval(autoplay);
+}
+window.addEventListener("load", () => {
+  iniciarAutoplay();
+
+  const carousel = document.querySelector(".carousel");
+  carousel.addEventListener("mouseenter", detenerAutoplay);
+  carousel.addEventListener("mouseleave", iniciarAutoplay);
+});
+</script>
 </body>
 </html>
