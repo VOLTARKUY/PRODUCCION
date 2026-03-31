@@ -198,6 +198,38 @@ footer{
   cursor:pointer;
   line-height:1;
 }
+  .form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  align-items: center;
+}
+.form-grid textarea {
+  grid-column: span 2;
+  resize: none;
+  height: 45px;
+}
+.enviar-btn {
+  height: 45px;
+}
+@media (max-width: 900px) {
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .form-grid textarea {
+    grid-column: span 2;
+}
+@media (max-width: 500px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-grid textarea {
+    grid-column: span 1;
+    height: 80px;
+  }
+  .enviar-btn {
+    width: 100%;
+}
 @media (max-width:900px){
   nav a{margin-left:12px}
 }
@@ -426,24 +458,24 @@ footer{
 
   <section id="consultanos">
     <h2 class="section-title">Consultanos</h2>
-    <form onsubmit="sendMail(event)" class="card">
-      <input id="nombre" placeholder="Nombre" required>
-      <input id="email" type="email" placeholder="Email" required>
-      <select id="servicio" required>
-        <option value="">Servicio</option>
-        <option>Proyectos eléctricos BT/MT</option>
-        <option>Iluminación y señalización</option>
-        <option>Energías Renovables</option>
-        <option>Medición y diseño de PAT</option>
-        <option>Mantenimiento de Instalaciones eléctricas existentes</option>
-        <option>Proyecto de Infraestructura física y lógica de redes</option>
-        <option>Modificación en infraestructura existente</option>
-        <option>Telefonía</option>
-        <option>Sistemas CCTV</option>
-      </select>
-      <textarea id="detalle" placeholder="Detalle del trabajo"></textarea>
-      <button class="btn" type="submit">Enviar</button>
-    </form>
+   <form onsubmit="sendMail(event)" class="form-grid card">
+  <input id="nombre" placeholder="Nombre" required>
+  <input id="email" type="email" placeholder="Email" required>
+  <select id="servicio" required>
+    <option value="">Servicio</option>
+    <option>Proyectos eléctricos BT/MT</option>
+    <option>Iluminación y señalización</option>
+    <option>Energías Renovables</option>
+    <option>Medición y diseño de PAT</option>
+    <option>Mantenimiento de Instalaciones eléctricas existentes</option>
+    <option>Proyecto de Infraestructura física y lógica de redes</option>
+    <option>Modificación en infraestructura existente</option>
+    <option>Telefonía</option>
+    <option>Sistemas CCTV</option>
+  </select>
+  <textarea id="detalle" placeholder="Detalle del trabajo"></textarea>
+  <button class="btn enviar-btn" type="submit">Enviar</button>
+</form>
   </section>
 </main>
 
