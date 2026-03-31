@@ -29,21 +29,24 @@ header{
   border-bottom: 1px solid rgba(255,255,255,.08);
   box-shadow: 0 8px 24px rgba(0,0,0,.22);
 }
-.nav {
+  header{
+  width: 100%;
+}
+.nav{
   max-width: 1200px;
-  margin: auto;
-  padding: 14px 20px;
+  margin: 0 auto;
+  padding: 12px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 24px;
+}
 }
 .brand{
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-
-nav{
+  nav{
   display:flex;
   align-items:center;
   flex-wrap:wrap;
@@ -57,12 +60,13 @@ nav{
   font-weight:600;
 }
   nav a{
-  color:var(--texto);
-  margin-left:22px;
-  text-decoration:none;
-  font-weight:600;
-  font-size:.96rem;
-  transition:color .2s ease;
+  color: var(--texto);
+  margin-left: 28px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+  transition: color 0.2s ease;
 }
 nav a:hover{
   color:var(--naranja);
