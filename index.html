@@ -233,6 +233,18 @@ footer{
   border-radius: 12px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.6);
 }
+  .lightbox-img {
+  animation: zoomIn 0.25s ease;
+}
+@keyframes zoomIn {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+}
 .cerrar{
   background:transparent;
   border:none;
