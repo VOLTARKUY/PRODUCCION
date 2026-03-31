@@ -27,10 +27,13 @@ header{
   z-index:10;
 }
 .nav {
+  max-width: 1200px;
+  margin: auto;
+  padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  gap: 20px;
 }
   .brand img {
   filter: drop-shadow(0 0 6px rgba(255,138,28,0.6));
@@ -42,6 +45,18 @@ header{
   margin-left:18px;
   text-decoration:none;
   font-weight:600;
+}
+  nav a {
+  color: var(--texto);
+  margin-left: 22px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+nav a:hover {
+  color: var(--naranja);
 }
 nav a:hover{color:var(--naranja)}
 .container{
