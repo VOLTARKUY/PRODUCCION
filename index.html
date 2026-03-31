@@ -216,50 +216,22 @@ footer{
 }
 
 /* ventana para imágenes */
-.lightbox{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.72);
-  z-index:9999;
-  justify-content:center;
-  align-items:center;
-  padding:24px;
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  cursor: zoom-out;
 }
-.lightbox-window{
-  position:relative;
-  width:min(92vw,980px);
-  max-height:90vh;
-  background:linear-gradient(180deg,#11375e,#0a2340);
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:18px;
-  box-shadow:0 18px 50px rgba(0,0,0,.45);
-  overflow:hidden;
-}
-.lightbox-bar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:12px 16px;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.04);
-}
-.lightbox-title{
-  font-size:1rem;
-  color:var(--texto);
-  margin:0;
-}
-.lightbox-body{
-  padding:18px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-.lightbox-img{
-  max-width:100%;
-  max-height:72vh;
-  border-radius:12px;
-  box-shadow:none;
+
+.lightbox-img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
 }
 .cerrar{
   background:transparent;
@@ -545,15 +517,9 @@ footer{
   © <span id="year"></span> VOLTARK
 </footer>
 
-<div id="lightbox" class="lightbox" onclick="cerrarLightbox(event)">
-  <div class="lightbox-window" onclick="event.stopPropagation()">
-    <div class="lightbox-bar">
-      <p class="lightbox-title">Vista de trabajo</p>
-      <button class="cerrar" type="button" onclick="cerrarLightbox(event)">&times;</button>
-    </div>
-    <div class="lightbox-body">
-      <img class="lightbox-img" id="lightbox-img" alt="Imagen ampliada">
-    </div>
+<div id="lightbox" class="lightbox" onclick="cerrarLightbox()">
+  <img class="lightbox-img" id="lightbox-img" alt="Imagen ampliada">
+</div>
   </div>
 </div>
 
